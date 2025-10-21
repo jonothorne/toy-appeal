@@ -1,0 +1,33 @@
+# Vendor dependencies (install via composer on server)
+/vendor/
+
+# Local development files
+test_email.php
+test_connection.php
+database_export.sql
+
+# Environment-specific config (will be created on server)
+includes/config.php
+
+# Log files
+*.log
+error.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentation (optional - remove if you want docs on production)
+*.md
+!README.md
+
+# Temporary files
+*.tmp
+*.bak
+*~
