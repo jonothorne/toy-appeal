@@ -449,7 +449,7 @@ function deleteReferral($referralId, $userId, $reason = '') {
 
     try {
         // Delete the referral
-        $result = deleteQuery(
+        $result = updateQuery(
             "DELETE FROM referrals WHERE id = ?",
             "i",
             [$referralId]
@@ -469,7 +469,7 @@ function deleteReferral($referralId, $userId, $reason = '') {
         // If no referrals left, delete the household too
         $householdDeleted = false;
         if ($remainingReferrals['count'] == 0) {
-            deleteQuery(
+            updateQuery(
                 "DELETE FROM households WHERE id = ?",
                 "i",
                 [$householdId]
