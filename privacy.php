@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/functions.php';
 $pageTitle = "Privacy Policy";
 require_once __DIR__ . '/includes/header.php';
 ?>
