@@ -19,9 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     switch ($action) {
         case 'update_status':
             $newStatus = $_POST['status'] ?? '';
-            $zoneId = !empty($_POST['zone_id']) ? intval($_POST['zone_id']) : null;
+            $rawZone = $_POST['zone_id'] ?? null;
+            $zoneProvided = ($rawZone !== null);
+            $zoneId = ($rawZone === '' || $rawZone === null) ? null : intval($rawZone);
 
-            if (updateReferralStatus($referralId, $newStatus, $currentUser['id'], $zoneId)) {
+            if (updateReferralStatus($referralId, $newStatus, $currentUser['id'], $zoneId, $zoneProvided)) {
                 $message = "Status updated successfully!";
             } else {
                 $error = "Failed to update status.";

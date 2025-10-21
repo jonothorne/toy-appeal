@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS zones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     zone_name VARCHAR(50) NOT NULL,
+    location VARCHAR(255) NULL,
     description TEXT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -119,10 +120,10 @@ INSERT INTO users (username, password_hash, full_name, email) VALUES
 ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin@example.com');
 
 -- Insert default zones
-INSERT INTO zones (zone_name, description) VALUES
-('Zone A', 'Main warehouse area'),
-('Zone B', 'Secondary storage'),
-('Zone C', 'Overflow area');
+INSERT INTO zones (zone_name, location, description) VALUES
+('Zone A', NULL, 'Main warehouse area'),
+('Zone B', NULL, 'Secondary storage'),
+('Zone C', NULL, 'Overflow area');
 
 -- Insert default settings
 INSERT INTO settings (setting_key, setting_value) VALUES

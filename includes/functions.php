@@ -99,7 +99,7 @@ function createReferral($referrerData, $childrenData) {
 }
 
 // Update referral status
-function updateReferralStatus($referralId, $newStatus, $userId = null, $zoneId = null) {
+function updateReferralStatus($referralId, $newStatus, $userId = null, $zoneId = null, $zoneProvided = false) {
     $conn = getDBConnection();
 
     // Get current status
@@ -146,10 +146,14 @@ function updateReferralStatus($referralId, $newStatus, $userId = null, $zoneId =
     }
 
     // Always update zone if provided (not just when status is 'located')
-    if ($zoneId !== null) {
-        $updates[] = "zone_id = ?";
-        $types .= "i";
-        $params[] = $zoneId;
+    if ($zoneProvided) {
+        if ($zoneId === null) {
+            $updates[] = "zone_id = NULL";
+        } else {
+            $updates[] = "zone_id = ?";
+            $types .= "i";
+            $params[] = $zoneId;
+        }
     }
 
     $types .= "i";
@@ -165,7 +169,7 @@ function updateReferralStatus($referralId, $newStatus, $userId = null, $zoneId =
         }
 
         // Log activity for zone change
-        if ($zoneId !== null && $currentReferral['zone_id'] != $zoneId) {
+        if ($zoneProvided && $currentReferral['zone_id'] != $zoneId) {
             $oldZone = $currentReferral['zone_id'] ? "Zone " . $currentReferral['zone_id'] : "None";
             $newZone = $zoneId ? "Zone " . $zoneId : "None";
             logActivity($referralId, $userId, "Zone changed", $oldZone, $newZone);
@@ -189,7 +193,7 @@ function updateReferralStatus($referralId, $newStatus, $userId = null, $zoneId =
         }
     }
 
-    return $result;
+    return $result !== false;
 }
 
 // Check if all children in a household are ready for collection
