@@ -41,6 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $message = "Note added successfully!";
             }
             break;
+
+        case 'delete_referral':
+            $reason = trim($_POST['delete_reason'] ?? 'No reason provided');
+            $result = deleteReferral($referralId, $currentUser['id'], $reason);
+
+            if ($result['success']) {
+                // Redirect to referrals list with success message
+                $_SESSION['message'] = "Referral deleted successfully.";
+                if ($result['household_deleted']) {
+                    $_SESSION['message'] .= " The household was also deleted as it had no remaining referrals.";
+                }
+                header('Location: referrals.php');
+                exit;
+            } else {
+                $error = "Failed to delete referral: " . ($result['error'] ?? 'Unknown error');
+            }
+            break;
     }
 }
 
@@ -125,6 +142,12 @@ foreach ($zones as $zone) {
                 <?php else: ?>
                     <p class="mt-2 text-xs text-orange-600">⚠ Label Not Printed</p>
                 <?php endif; ?>
+
+                <!-- Delete Button -->
+                <button onclick="showDeleteModal()"
+                        class="mt-4 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition">
+                    🗑️ Delete Referral
+                </button>
             </div>
         </div>
     </div>
@@ -465,5 +488,85 @@ foreach ($zones as $zone) {
         </div>
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mt-5 text-center">Delete Referral</h3>
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500 mb-4">
+                    Are you sure you want to delete referral <strong><?php echo e($referral['reference_number']); ?></strong>?
+                    This action cannot be undone.
+                </p>
+                <?php if (!empty($siblings)): ?>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+                        <p class="text-xs text-yellow-700">
+                            <strong>Note:</strong> This household has <?php echo count($siblings); ?> other child(ren).
+                            Only this referral will be deleted.
+                        </p>
+                    </div>
+                <?php else: ?>
+                    <div class="bg-orange-50 border-l-4 border-orange-400 p-3 mb-4">
+                        <p class="text-xs text-orange-700">
+                            <strong>Note:</strong> This is the only referral in the household. The household will also be deleted.
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+                <form method="POST" action="" id="deleteForm">
+                    <input type="hidden" name="action" value="delete_referral">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Reason for deletion (optional):</label>
+                        <textarea name="delete_reason" rows="3"
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                                  placeholder="e.g., Duplicate referral, declined by family, data entry error..."></textarea>
+                        <p class="text-xs text-gray-500 mt-1">This will be logged for audit purposes.</p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button type="button" onclick="hideDeleteModal()"
+                                class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200 transition">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                class="flex-1 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition">
+                            Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function hideDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideDeleteModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        hideDeleteModal();
+    }
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/admin_footer.php'; ?>

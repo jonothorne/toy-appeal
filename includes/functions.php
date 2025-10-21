@@ -427,3 +427,71 @@ function getStatusBadge($status) {
 
     return $badges[$status] ?? $status;
 }
+
+// Delete referral (GDPR compliant with audit logging)
+function deleteReferral($referralId, $userId, $reason = '') {
+    $conn = getDBConnection();
+
+    // Get referral details before deletion for logging
+    $referral = getReferralWithHousehold($referralId);
+
+    if (!$referral) {
+        return ['success' => false, 'error' => 'Referral not found'];
+    }
+
+    $householdId = $referral['household_id'];
+
+    // Log the deletion for audit trail (GDPR requirement)
+    logActivity($referralId, $userId, 'Referral deleted', $referral['reference_number'], $reason ?: 'No reason provided');
+
+    // Start transaction
+    $conn->begin_transaction();
+
+    try {
+        // Delete the referral
+        $result = deleteQuery(
+            "DELETE FROM referrals WHERE id = ?",
+            "i",
+            [$referralId]
+        );
+
+        if ($result === false) {
+            throw new Exception("Failed to delete referral");
+        }
+
+        // Check if this was the last referral in the household
+        $remainingReferrals = getRow(
+            "SELECT COUNT(*) as count FROM referrals WHERE household_id = ?",
+            "i",
+            [$householdId]
+        );
+
+        // If no referrals left, delete the household too
+        $householdDeleted = false;
+        if ($remainingReferrals['count'] == 0) {
+            deleteQuery(
+                "DELETE FROM households WHERE id = ?",
+                "i",
+                [$householdId]
+            );
+            $householdDeleted = true;
+        }
+
+        // Commit transaction
+        $conn->commit();
+
+        return [
+            'success' => true,
+            'household_deleted' => $householdDeleted
+        ];
+
+    } catch (Exception $e) {
+        // Rollback on error
+        $conn->rollback();
+        error_log("Delete referral error: " . $e->getMessage());
+        return [
+            'success' => false,
+            'error' => $e->getMessage()
+        ];
+    }
+}

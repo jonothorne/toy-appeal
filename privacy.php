@@ -30,10 +30,10 @@ require_once __DIR__ . '/includes/header.php';
                 <p class="text-gray-700 mb-2">Alive Church is the data controller for the information you provide. You can contact us at:</p>
                 <div class="bg-gray-50 p-4 rounded-lg">
                     <p class="text-gray-700"><strong>Alive Church</strong></p>
-                    <p class="text-gray-700">High Street, Orpington</p>
-                    <p class="text-gray-700">Kent BR6 0JY</p>
+                    <p class="text-gray-700">Alive House</p>
+                    <p class="text-gray-700">Nelson Street</p>
+                    <p class="text-gray-700">Norwich, NR2 4DR</p>
                     <p class="text-gray-700">Email: <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a></p>
-                    <p class="text-gray-700">Phone: 01689 762222</p>
                 </div>
             </section>
 
@@ -168,7 +168,6 @@ require_once __DIR__ . '/includes/header.php';
                 <p class="text-gray-700">
                     If you have any questions about this privacy policy or how we handle your data, please contact us at
                     <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a>
-                    or call 01689 762222.
                 </p>
             </section>
 

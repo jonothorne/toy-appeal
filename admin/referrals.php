@@ -17,6 +17,14 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
 ?>
 
 <div class="space-y-6">
+    <!-- Success Message -->
+    <?php if (isset($_SESSION['message'])): ?>
+        <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded">
+            <p class="text-sm text-green-700"><?php echo e($_SESSION['message']); ?></p>
+        </div>
+        <?php unset($_SESSION['message']); ?>
+    <?php endif; ?>
+
     <!-- Page Header -->
     <div class="flex justify-between items-center">
         <div>
