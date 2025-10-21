@@ -36,7 +36,13 @@ function sendEmail($to, $subject, $htmlBody, $textBody = '') {
             $mail->SMTPAuth   = true;
             $mail->Username   = $smtpUsername;
             $mail->Password   = $smtpPassword;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+            // Use SSL for port 465, STARTTLS for 587
+            if ($smtpPort == 465) {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            } else {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            }
         } else {
             $mail->SMTPAuth   = false;
         }
