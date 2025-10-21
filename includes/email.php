@@ -4,8 +4,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Aws\Ses\SesClient;
+use Aws\Exception\AwsException;
 
-// Send email using PHPMailer with SMTP
+// Send email - automatically chooses between SMTP or SES API
 function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     // Get email settings from database
     $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
@@ -14,6 +16,90 @@ function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     $smtpPort = getSetting('smtp_port', SMTP_PORT);
     $smtpUsername = getSetting('smtp_username', SMTP_USERNAME);
     $smtpPassword = getSetting('smtp_password', SMTP_PASSWORD);
+    $emailMethod = getSetting('email_method', 'smtp'); // 'smtp' or 'ses_api'
+
+    // If using SES API, call that function instead
+    if ($emailMethod === 'ses_api') {
+        return sendEmailViaSESAPI($to, $subject, $htmlBody, $textBody);
+    }
+
+    // Otherwise use SMTP (existing code)
+    return sendEmailViaSMTP($to, $subject, $htmlBody, $textBody, $fromEmail, $fromName, $smtpHost, $smtpPort, $smtpUsername, $smtpPassword);
+}
+
+// Send email using Amazon SES API (bypasses SMTP ports - uses HTTPS)
+function sendEmailViaSESAPI($to, $subject, $htmlBody, $textBody = '') {
+    try {
+        // Get settings from database
+        $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
+        $fromName = getSetting('smtp_from_name', FROM_NAME);
+        $awsAccessKey = getSetting('smtp_username', SMTP_USERNAME); // We'll reuse these fields
+        $awsSecretKey = getSetting('smtp_password', SMTP_PASSWORD);
+        $awsRegion = getSetting('aws_region', 'eu-west-1'); // Default to Ireland
+
+        // Create SES client
+        $sesClient = new SesClient([
+            'version' => 'latest',
+            'region' => $awsRegion,
+            'credentials' => [
+                'key' => $awsAccessKey,
+                'secret' => $awsSecretKey,
+            ],
+        ]);
+
+        // Prepare email
+        $plainTextBody = $textBody ?: strip_tags($htmlBody);
+
+        // Send email via SES API
+        $result = $sesClient->sendEmail([
+            'Source' => "\"{$fromName}\" <{$fromEmail}>",
+            'Destination' => [
+                'ToAddresses' => [$to],
+            ],
+            'Message' => [
+                'Subject' => [
+                    'Data' => $subject,
+                    'Charset' => 'UTF-8',
+                ],
+                'Body' => [
+                    'Html' => [
+                        'Data' => $htmlBody,
+                        'Charset' => 'UTF-8',
+                    ],
+                    'Text' => [
+                        'Data' => $plainTextBody,
+                        'Charset' => 'UTF-8',
+                    ],
+                ],
+            ],
+        ]);
+
+        $messageId = $result->get('MessageId');
+        error_log("Email sent via SES API to {$to}: Success (MessageId: {$messageId})");
+        return true;
+
+    } catch (AwsException $e) {
+        $errorMsg = "SES API Error sending to {$to}: " . $e->getMessage();
+        echo "\n\nERROR: $errorMsg\n\n";
+        error_log($errorMsg);
+        return false;
+    } catch (Exception $e) {
+        $errorMsg = "Email failed to {$to}: " . $e->getMessage();
+        echo "\n\nERROR: $errorMsg\n\n";
+        error_log($errorMsg);
+        return false;
+    }
+}
+
+// Send email using PHPMailer with SMTP
+function sendEmailViaSMTP($to, $subject, $htmlBody, $textBody = '', $fromEmail = null, $fromName = null, $smtpHost = null, $smtpPort = null, $smtpUsername = null, $smtpPassword = null) {
+    // Get email settings from database if not provided
+    if (!$fromEmail) $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
+    if (!$fromName) $fromName = getSetting('smtp_from_name', FROM_NAME);
+    if (!$smtpHost) $smtpHost = getSetting('smtp_host', SMTP_HOST);
+    if (!$smtpPort) $smtpPort = getSetting('smtp_port', SMTP_PORT);
+    if (!$smtpUsername) $smtpUsername = getSetting('smtp_username', SMTP_USERNAME);
+    if (!$smtpPassword) $smtpPassword = getSetting('smtp_password', SMTP_PASSWORD);
 
     $mail = new PHPMailer(true);
 
