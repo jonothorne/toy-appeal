@@ -32,9 +32,9 @@ function createReferral($referrerData, $childrenData) {
     try {
         // Insert household
         $householdId = insertQuery(
-            "INSERT INTO households (referrer_name, referrer_organisation, referrer_team, secondary_contact, referrer_phone, referrer_email, postcode, duration_known, additional_notes)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            "sssssssss",
+            "INSERT INTO households (referrer_name, referrer_organisation, referrer_team, secondary_contact, referrer_phone, referrer_email, postcode, duration_known, additional_notes, gdpr_consent, gdpr_consent_date)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "sssssssssss",
             [
                 $referrerData['name'],
                 $referrerData['organisation'],
@@ -44,7 +44,9 @@ function createReferral($referrerData, $childrenData) {
                 $referrerData['email'],
                 $referrerData['postcode'],
                 $referrerData['duration_known'],
-                $referrerData['additional_notes'] ?? ''
+                $referrerData['additional_notes'] ?? '',
+                $referrerData['gdpr_consent'] ?? 0,
+                $referrerData['gdpr_consent_date'] ?? null
             ]
         );
 

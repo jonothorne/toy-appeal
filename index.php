@@ -49,7 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $referralsEnabled == '1') {
         $error = "Please add at least one child to the referral.";
     } elseif (!filter_var($referrerData['email'], FILTER_VALIDATE_EMAIL)) {
         $error = "Please enter a valid email address.";
+    } elseif (!isset($_POST['gdpr_consent']) || $_POST['gdpr_consent'] !== 'on') {
+        $error = "You must consent to data processing to submit a referral.";
     } else {
+        // Add GDPR consent to referrer data
+        $referrerData['gdpr_consent'] = 1;
+        $referrerData['gdpr_consent_date'] = date('Y-m-d H:i:s');
         // Create referral
         $result = createReferral($referrerData, $childrenData);
 
@@ -225,6 +230,32 @@ require_once __DIR__ . '/includes/header.php';
                                 class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                             + Add Child
                         </button>
+                    </div>
+
+                    <!-- GDPR Consent -->
+                    <div class="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">Data Protection & Privacy</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="gdpr_consent" name="gdpr_consent" type="checkbox" required
+                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                </div>
+                                <div class="ml-3">
+                                    <label for="gdpr_consent" class="text-sm text-gray-700">
+                                        <span class="font-medium">I consent to Alive Church collecting and processing the information provided in this referral form.</span>
+                                        I understand that this data will be used solely for the purpose of processing this Christmas Toy Appeal referral and contacting me about collection arrangements.
+                                        I understand that I have the right to request access to, correction of, or deletion of this data at any time by contacting
+                                        <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a>.
+                                        <span class="text-red-500">*</span>
+                                    </label>
+                                    <p class="text-xs text-gray-600 mt-2">
+                                        For more information about how we handle your data, please read our
+                                        <a href="privacy.php" target="_blank" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Submit Button -->

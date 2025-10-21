@@ -207,6 +207,11 @@ function sendReferralConfirmation($referrerEmail, $referrerName, $childrenCount,
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px;'>
                     You are receiving this email because a referral was submitted through our Christmas Toy Appeal system.
                 </p>
+                <p style='font-size: 11px; color: #9ca3af; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb;'>
+                    <strong>Your Data Rights:</strong> Under UK GDPR, you have the right to access, correct, or request deletion of your personal data.
+                    To exercise these rights or for any privacy questions, contact us at office@alive.me.uk.
+                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #2563eb;'>Privacy Policy</a>.
+                </p>
             </div>
         </div>
     </body>
@@ -301,6 +306,11 @@ function sendCollectionReadyEmail($referralId) {
                 <p>&copy; " . date('Y') . " {$siteName}. All rights reserved.</p>
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px;'>
                     You are receiving this email because a referral was submitted through our Christmas Toy Appeal system.
+                </p>
+                <p style='font-size: 11px; color: #9ca3af; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb;'>
+                    <strong>Your Data Rights:</strong> Under UK GDPR, you have the right to access, correct, or request deletion of your personal data.
+                    To exercise these rights or for any privacy questions, contact us at office@alive.me.uk.
+                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #2563eb;'>Privacy Policy</a>.
                 </p>
             </div>
         </div>
