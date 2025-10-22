@@ -362,6 +362,8 @@ function sendReferralConfirmation($referrerEmail, $referrerName, $childrenCount,
     </head>
     <body>
         <div class='container'>
+            <img src='http://toyappeal.alivechur.ch/assets/imgs/logo.png' />
+
             <div class='header'>
                 <h1>{$siteName}</h1>
             </div>
@@ -376,8 +378,8 @@ function sendReferralConfirmation($referrerEmail, $referrerName, $childrenCount,
             </div>
             <div class='footer'>
                 <p><strong>{$siteName}</strong></p>
-                <p>Alive Church, High Street, Orpington, Kent BR6 0JY</p>
-                <p>Email: office@alive.me.uk | Phone: 01689 762222</p>
+                <p>Alive Church, Nelson Street, Norwich NR2 4DR</p>
+                <p>Email: office@alive.me.uk</p>
                 <p>&copy; " . date('Y') . " {$siteName}. All rights reserved.</p>
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px;'>
                     You are receiving this email because a referral was submitted through our Christmas Toy Appeal system.
@@ -449,6 +451,7 @@ function sendCollectionReadyEmail($referralId) {
     </head>
     <body>
         <div class='container'>
+            <img src='http://toyappeal.alivechur.ch/assets/imgs/logo.png' />
             <div class='header'>
                 <h1>Parcel Ready for Collection!</h1>
             </div>
@@ -476,8 +479,8 @@ function sendCollectionReadyEmail($referralId) {
             </div>
             <div class='footer'>
                 <p><strong>{$siteName}</strong></p>
-                <p>Alive Church, High Street, Orpington, Kent BR6 0JY</p>
-                <p>Email: office@alive.me.uk | Phone: 01689 762222</p>
+                <p>Alive Church, Nelson Street, Norwich NR2 4DR</p>
+                <p>Email: office@alive.me.uk</p>
                 <p>&copy; " . date('Y') . " {$siteName}. All rights reserved.</p>
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px;'>
                     You are receiving this email because a referral was submitted through our Christmas Toy Appeal system.
