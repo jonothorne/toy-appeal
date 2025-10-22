@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 use Aws\Ses\SesClient;
 use Aws\Exception\AwsException;
 
-// Send email - automatically chooses between SMTP or SES API
+// Send email - automatically chooses between SMTP, SES API, or PHP mail()
 function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     // Get email settings from database
     $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
@@ -16,15 +16,16 @@ function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     $smtpPort = getSetting('smtp_port', SMTP_PORT);
     $smtpUsername = getSetting('smtp_username', SMTP_USERNAME);
     $smtpPassword = getSetting('smtp_password', SMTP_PASSWORD);
-    $emailMethod = getSetting('email_method', 'smtp'); // 'smtp' or 'ses_api'
+    $emailMethod = getSetting('email_method', 'mail'); // 'smtp', 'ses_api', or 'mail'
 
-    // If using SES API, call that function instead
+    // Choose email sending method
     if ($emailMethod === 'ses_api') {
         return sendEmailViaSESAPI($to, $subject, $htmlBody, $textBody);
+    } elseif ($emailMethod === 'mail') {
+        return sendEmailViaMailFunction($to, $subject, $htmlBody, $textBody);
+    } else {
+        return sendEmailViaSMTP($to, $subject, $htmlBody, $textBody, $fromEmail, $fromName, $smtpHost, $smtpPort, $smtpUsername, $smtpPassword);
     }
-
-    // Otherwise use SMTP (existing code)
-    return sendEmailViaSMTP($to, $subject, $htmlBody, $textBody, $fromEmail, $fromName, $smtpHost, $smtpPort, $smtpUsername, $smtpPassword);
 }
 
 // Send email using Amazon SES API (bypasses SMTP ports - uses HTTPS)
@@ -160,6 +161,60 @@ function sendEmailViaSMTP($to, $subject, $htmlBody, $textBody = '', $fromEmail =
     } catch (Exception $e) {
         $errorMsg = "Email failed to {$to}: {$mail->ErrorInfo} | Exception: " . $e->getMessage();
         echo "\n\nERROR: $errorMsg\n\n";
+        error_log($errorMsg);
+        return false;
+    }
+}
+
+// Send email using PHP's built-in mail() function (works on GoDaddy)
+function sendEmailViaMailFunction($to, $subject, $htmlBody, $textBody = '') {
+    try {
+        // Get email settings from database
+        $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
+        $fromName = getSetting('smtp_from_name', FROM_NAME);
+
+        // Prepare plain text version if not provided
+        $plainTextBody = $textBody ?: strip_tags($htmlBody);
+
+        // Create a boundary string for multipart email
+        $boundary = md5(uniqid(time()));
+
+        // Set headers
+        $headers = [];
+        $headers[] = "From: {$fromName} <{$fromEmail}>";
+        $headers[] = "Reply-To: {$fromEmail}";
+        $headers[] = "MIME-Version: 1.0";
+        $headers[] = "Content-Type: multipart/alternative; boundary=\"{$boundary}\"";
+        $headers[] = "X-Mailer: PHP/" . phpversion();
+        $headers[] = "X-Priority: 1";
+        $headers[] = "Importance: High";
+
+        // Build multipart message body
+        $message = "--{$boundary}\r\n";
+        $message .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+        $message .= $plainTextBody . "\r\n\r\n";
+
+        $message .= "--{$boundary}\r\n";
+        $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+        $message .= $htmlBody . "\r\n\r\n";
+
+        $message .= "--{$boundary}--";
+
+        // Send email using mail() function
+        $success = mail($to, $subject, $message, implode("\r\n", $headers));
+
+        if ($success) {
+            error_log("Email sent via mail() to {$to}: Success");
+            return true;
+        } else {
+            error_log("Email via mail() to {$to}: Failed (mail function returned false)");
+            return false;
+        }
+
+    } catch (Exception $e) {
+        $errorMsg = "Email via mail() failed to {$to}: " . $e->getMessage();
         error_log($errorMsg);
         return false;
     }

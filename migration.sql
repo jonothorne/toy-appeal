@@ -232,6 +232,7 @@ LOCK TABLES `settings` WRITE;
 INSERT INTO `settings` VALUES ('collection_hours','Monday-Friday 9am-5pm','2025-10-14 15:26:35');
 INSERT INTO `settings` VALUES ('collection_location','Main Warehouse, Norfolk','2025-10-14 15:26:35');
 INSERT INTO `settings` VALUES ('current_year','2025','2025-10-14 15:30:48');
+INSERT INTO `settings` VALUES ('email_method','mail','2025-10-22 10:33:57');
 INSERT INTO `settings` VALUES ('enable_referrals','1','2025-10-15 13:45:58');
 INSERT INTO `settings` VALUES ('site_name','Alive UK Christmas Toy Appeal','2025-10-15 13:45:13');
 INSERT INTO `settings` VALUES ('smtp_from_email','office@alive.me.uk','2025-10-21 11:42:22');
