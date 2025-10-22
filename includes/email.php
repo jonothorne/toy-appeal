@@ -205,7 +205,9 @@ function sendEmailViaMailFunction($to, $subject, $htmlBody, $textBody = '') {
         $message .= "--{$boundary}--";
 
         // Send email using mail() function
-        $success = mail($to, $subject, $message, implode("\r\n", $headers));
+        // Use 5th parameter to set envelope sender (helps with From address on GoDaddy)
+        $additionalParams = "-f{$fromEmail}";
+        $success = mail($to, $subject, $message, implode("\r\n", $headers), $additionalParams);
 
         if ($success) {
             error_log("Email sent via mail() to {$to}: Success");
