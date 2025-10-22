@@ -146,56 +146,56 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                 <?php endif; ?>
 
-                <!-- Referral Agreement Section -->
-                <div class="mb-8 bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
-                    <div class="flex items-start mb-4">
-                        <svg class="h-6 w-6 text-blue-600 mt-1 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-blue-900 mb-2">Important: Referral Agreement</h3>
-                            <p class="text-blue-800 mb-3">
-                                Before making a referral, you must read and agree to our Referral Agreement. This document outlines the terms and conditions of our toy appeal service. 
-                                <strong>You only need to read it once.</strong>
-                            </p>
-                            <a href="<?php echo SITE_URL; ?>/assets/Toy_Appeal_Referral_Agreement.pdf"
-                               target="_blank"
-                               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm">
-                                <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Download & Read Referral Agreement (PDF)
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="border-t border-blue-200 pt-4 mt-4">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="referral_agreement"
-                                       name="referral_agreement"
-                                       type="checkbox"
-                                       required
-                                       class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                            </div>
-                            <div class="ml-3">
-                                <label for="referral_agreement" class="text-sm font-medium text-blue-900">
-                                    <span class="text-red-600">*</span> I have read and agree to the
-                                    <a href="<?php echo SITE_URL; ?>/assets/Toy_Appeal_Referral_Agreement.pdf"
-                                       target="_blank"
-                                       class="text-blue-700 underline hover:text-blue-800">
-                                        Referral Agreement
-                                    </a>
-                                </label>
-                                <p class="text-xs text-blue-700 mt-1">
-                                    You must read the agreement and check this box to proceed with your referral.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <form method="POST" action="" id="referralForm">
+                    <!-- Referral Agreement Section -->
+                    <div class="mb-8 bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
+                        <div class="flex items-start mb-4">
+                            <svg class="h-6 w-6 text-blue-600 mt-1 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-blue-900 mb-2">Important: Referral Agreement</h3>
+                                <p class="text-blue-800 mb-3">
+                                    Before making a referral, you must read and agree to our Referral Agreement. This document outlines the terms and conditions of our toy appeal service.
+                                    <strong>You only need to read it once.</strong>
+                                </p>
+                                <a href="<?php echo SITE_URL; ?>/assets/Toy_Appeal_Referral_Agreement.pdf"
+                                   target="_blank"
+                                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm">
+                                    <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    Download & Read Referral Agreement (PDF)
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-blue-200 pt-4 mt-4">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="referral_agreement"
+                                           name="referral_agreement"
+                                           type="checkbox"
+                                           required
+                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                </div>
+                                <div class="ml-3">
+                                    <label for="referral_agreement" class="text-sm font-medium text-blue-900">
+                                        <span class="text-red-600">*</span> I have read and agree to the
+                                        <a href="<?php echo SITE_URL; ?>/assets/Toy_Appeal_Referral_Agreement.pdf"
+                                           target="_blank"
+                                           class="text-blue-700 underline hover:text-blue-800">
+                                            Referral Agreement
+                                        </a>
+                                    </label>
+                                    <p class="text-xs text-blue-700 mt-1">
+                                        You must read the agreement and check this box to proceed with your referral.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Referrer Information -->
                     <div class="mb-8">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">Your Information</h2>
