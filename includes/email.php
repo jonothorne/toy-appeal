@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 use Aws\Ses\SesClient;
 use Aws\Exception\AwsException;
 
-// Send email - automatically chooses between SMTP, SES API, or PHP mail()
+// Send email - automatically chooses between SMTP, SES API, SendGrid, or PHP mail()
 function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     // Get email settings from database
     $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
@@ -16,11 +16,13 @@ function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     $smtpPort = getSetting('smtp_port', SMTP_PORT);
     $smtpUsername = getSetting('smtp_username', SMTP_USERNAME);
     $smtpPassword = getSetting('smtp_password', SMTP_PASSWORD);
-    $emailMethod = getSetting('email_method', 'mail'); // 'smtp', 'ses_api', or 'mail'
+    $emailMethod = getSetting('email_method', 'mail'); // 'smtp', 'ses_api', 'sendgrid', or 'mail'
 
     // Choose email sending method
     if ($emailMethod === 'ses_api') {
         return sendEmailViaSESAPI($to, $subject, $htmlBody, $textBody);
+    } elseif ($emailMethod === 'sendgrid') {
+        return sendEmailViaSendGrid($to, $subject, $htmlBody, $textBody);
     } elseif ($emailMethod === 'mail') {
         return sendEmailViaMailFunction($to, $subject, $htmlBody, $textBody);
     } else {
@@ -215,6 +217,75 @@ function sendEmailViaMailFunction($to, $subject, $htmlBody, $textBody = '') {
 
     } catch (Exception $e) {
         $errorMsg = "Email via mail() failed to {$to}: " . $e->getMessage();
+        error_log($errorMsg);
+        return false;
+    }
+}
+
+// Send email using SendGrid API (RECOMMENDED - reliable and free for 100/day)
+function sendEmailViaSendGrid($to, $subject, $htmlBody, $textBody = '') {
+    try {
+        // Get settings from database
+        $fromEmail = getSetting('smtp_from_email', FROM_EMAIL);
+        $fromName = getSetting('smtp_from_name', FROM_NAME);
+        $apiKey = getSetting('sendgrid_api_key', '');
+
+        if (empty($apiKey)) {
+            error_log("SendGrid API key not configured");
+            return false;
+        }
+
+        // Prepare plain text version
+        $plainTextBody = $textBody ?: strip_tags($htmlBody);
+
+        // Build SendGrid API request
+        $url = 'https://api.sendgrid.com/v3/mail/send';
+
+        $data = [
+            'personalizations' => [[
+                'to' => [['email' => $to]]
+            ]],
+            'from' => [
+                'email' => $fromEmail,
+                'name' => $fromName
+            ],
+            'subject' => $subject,
+            'content' => [
+                [
+                    'type' => 'text/plain',
+                    'value' => $plainTextBody
+                ],
+                [
+                    'type' => 'text/html',
+                    'value' => $htmlBody
+                ]
+            ]
+        ];
+
+        // Send via cURL
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json'
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            error_log("Email sent via SendGrid to {$to}: Success (HTTP {$httpCode})");
+            return true;
+        } else {
+            error_log("SendGrid API error to {$to}: HTTP {$httpCode} - {$response}");
+            return false;
+        }
+
+    } catch (Exception $e) {
+        $errorMsg = "SendGrid failed to {$to}: " . $e->getMessage();
         error_log($errorMsg);
         return false;
     }
