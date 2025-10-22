@@ -428,7 +428,7 @@ function getStatusBadge($status) {
     return $badges[$status] ?? $status;
 }
 
-// Delete referral (GDPR compliant with audit logging)
+// Delete referral (GDPR compliant with permanent audit logging)
 function deleteReferral($referralId, $userId, $reason = '') {
     $conn = getDBConnection();
 
@@ -441,14 +441,38 @@ function deleteReferral($referralId, $userId, $reason = '') {
 
     $householdId = $referral['household_id'];
 
-    // Log the deletion for audit trail (GDPR requirement)
-    logActivity($referralId, $userId, 'Referral deleted', $referral['reference_number'], $reason ?: 'No reason provided');
-
     // Start transaction
     $conn->begin_transaction();
 
     try {
-        // Delete the referral
+        // Check if this will be the last referral in the household
+        $remainingReferrals = getRow(
+            "SELECT COUNT(*) as count FROM referrals WHERE household_id = ?",
+            "i",
+            [$householdId]
+        );
+
+        $householdDeleted = ($remainingReferrals['count'] == 1); // Will be deleted if this is the only one
+
+        // Log to permanent deletions_log table BEFORE deletion (survives FK cascade)
+        insertQuery(
+            "INSERT INTO deletions_log (deleted_referral_id, reference_number, child_initials, referrer_name, referrer_organisation, deleted_by, reason, household_id, household_deleted)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "issssissi",
+            [
+                $referralId,
+                $referral['reference_number'],
+                $referral['child_initials'],
+                $referral['referrer_name'],
+                $referral['referrer_organisation'],
+                $userId,
+                $reason ?: 'No reason provided',
+                $householdId,
+                $householdDeleted ? 1 : 0
+            ]
+        );
+
+        // Delete the referral (this will cascade delete activity_log entries)
         $result = updateQuery(
             "DELETE FROM referrals WHERE id = ?",
             "i",
@@ -459,22 +483,13 @@ function deleteReferral($referralId, $userId, $reason = '') {
             throw new Exception("Failed to delete referral");
         }
 
-        // Check if this was the last referral in the household
-        $remainingReferrals = getRow(
-            "SELECT COUNT(*) as count FROM referrals WHERE household_id = ?",
-            "i",
-            [$householdId]
-        );
-
         // If no referrals left, delete the household too
-        $householdDeleted = false;
-        if ($remainingReferrals['count'] == 0) {
+        if ($householdDeleted) {
             updateQuery(
                 "DELETE FROM households WHERE id = ?",
                 "i",
                 [$householdId]
             );
-            $householdDeleted = true;
         }
 
         // Commit transaction

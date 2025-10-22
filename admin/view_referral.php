@@ -1,18 +1,61 @@
 <?php
-$pageTitle = "View Referral";
-require_once __DIR__ . '/includes/admin_header.php';
+// Include dependencies BEFORE any output
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/email.php';
 
+// Check authentication (session already started in config.php)
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$currentUser = getRow("SELECT * FROM users WHERE id = ?", "i", [$_SESSION['user_id']]);
+
 $referralId = intval($_GET['id'] ?? 0);
-$message = '';
-$error = '';
 
 if (!$referralId) {
     header('Location: referrals.php');
     exit;
 }
 
-// Handle status update
+// Handle DELETE action BEFORE any output
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_referral') {
+    $reason = trim($_POST['delete_reason'] ?? 'No reason provided');
+    $result = deleteReferral($referralId, $currentUser['id'], $reason);
+
+    if ($result['success']) {
+        // Redirect to referrals list with success message
+        $_SESSION['message'] = "Referral deleted successfully.";
+        if ($result['household_deleted']) {
+            $_SESSION['message'] .= " The household was also deleted as it had no remaining referrals.";
+        }
+        header('Location: referrals.php');
+        exit;
+    } else {
+        $error = "Failed to delete referral: " . ($result['error'] ?? 'Unknown error');
+    }
+}
+
+// Check if referral exists BEFORE including header
+$referral = getReferralWithHousehold($referralId);
+
+if (!$referral) {
+    // Referral not found (deleted or doesn't exist)
+    $_SESSION['message'] = "Referral not found. It may have been deleted.";
+    header('Location: referrals.php');
+    exit;
+}
+
+// Now include header (after potential redirects)
+$pageTitle = "View Referral";
+require_once __DIR__ . '/includes/admin_header.php';
+
+$message = '';
+$error = $error ?? '';
+
+// Handle other actions (non-redirect)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
@@ -41,35 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $message = "Note added successfully!";
             }
             break;
-
-        case 'delete_referral':
-            $reason = trim($_POST['delete_reason'] ?? 'No reason provided');
-            $result = deleteReferral($referralId, $currentUser['id'], $reason);
-
-            if ($result['success']) {
-                // Redirect to referrals list with success message
-                $_SESSION['message'] = "Referral deleted successfully.";
-                if ($result['household_deleted']) {
-                    $_SESSION['message'] .= " The household was also deleted as it had no remaining referrals.";
-                }
-                header('Location: referrals.php');
-                exit;
-            } else {
-                $error = "Failed to delete referral: " . ($result['error'] ?? 'Unknown error');
-            }
-            break;
     }
 }
 
-// Get referral details
-$referral = getReferralWithHousehold($referralId);
-
-if (!$referral) {
-    header('Location: referrals.php');
-    exit;
-}
-
-// Get siblings
+// Get siblings (referral already fetched above)
 $siblings = getSiblings($referral['household_id'], $referralId);
 
 // Get activity log
@@ -109,6 +127,12 @@ foreach ($zones as $zone) {
     </div>
 
     <!-- Messages -->
+    <?php if (isset($_SESSION['message'])): ?>
+        <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded">
+            <p class="text-sm text-green-700"><?php echo e($_SESSION['message']); ?></p>
+        </div>
+        <?php unset($_SESSION['message']); ?>
+    <?php endif; ?>
     <?php if ($message): ?>
         <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded">
             <p class="text-sm text-green-700"><?php echo e($message); ?></p>
@@ -143,11 +167,17 @@ foreach ($zones as $zone) {
                     <p class="mt-2 text-xs text-orange-600">⚠ Label Not Printed</p>
                 <?php endif; ?>
 
-                <!-- Delete Button -->
-                <button onclick="showDeleteModal()"
-                        class="mt-4 px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition">
-                    🗑️ Delete Referral
-                </button>
+                <!-- Action Buttons -->
+                <div class="mt-4 flex gap-2">
+                    <a href="edit_referral.php?id=<?php echo $referralId; ?>"
+                       class="px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition">
+                        ✏️ Edit Referral
+                    </a>
+                    <button onclick="showDeleteModal()"
+                            class="px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition">
+                        🗑️ Delete Referral
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -163,7 +193,7 @@ foreach ($zones as $zone) {
                     </svg>
                 </div>
                 <div class="ml-3 flex-1">
-                    <h3 class="text-lg font-semibold text-purple-900 mb-2">📦 Warehouse Location for Volunteers</h3>
+                    <h3 class="text-lg font-semibold text-purple-900 mb-2">📦 Warehouse Location</h3>
                     <?php if (!empty($referral['zone_name'])): ?>
                         <p class="text-sm text-purple-800">
                             <span class="font-semibold">Zone:</span> <?php echo e($referral['zone_name']); ?>
