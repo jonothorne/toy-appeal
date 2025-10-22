@@ -7,6 +7,54 @@ use PHPMailer\PHPMailer\Exception;
 use Aws\Ses\SesClient;
 use Aws\Exception\AwsException;
 
+// Queue email to be sent in background (non-blocking)
+function queueEmailInBackground($emailType, $data) {
+    // Check if background email processing is enabled
+    $backgroundEmailsEnabled = getSetting('background_emails', '1');
+
+    // If disabled, send synchronously (old way)
+    if ($backgroundEmailsEnabled !== '1') {
+        error_log("Background emails disabled - sending synchronously");
+
+        switch ($emailType) {
+            case 'referral_confirmation':
+                return sendReferralConfirmation(
+                    $data['email'],
+                    $data['name'],
+                    $data['child_count'],
+                    $data['household_id']
+                );
+            case 'collection_ready':
+                return sendCollectionReadyEmail($data['referral_id']);
+            default:
+                error_log("Unknown email type: {$emailType}");
+                return false;
+        }
+    }
+
+    // Send in background (non-blocking)
+    $emailDataJson = json_encode($data);
+    $scriptPath = __DIR__ . '/../process_email.php';
+
+    // Escape arguments for shell safety
+    $emailType = escapeshellarg($emailType);
+    $emailDataJson = escapeshellarg($emailDataJson);
+
+    // Run in background using exec() - doesn't wait for completion
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        // Windows
+        $cmd = "start /B php {$scriptPath} {$emailType} {$emailDataJson}";
+        pclose(popen($cmd, 'r'));
+    } else {
+        // Linux/Unix/Mac
+        $cmd = "php {$scriptPath} {$emailType} {$emailDataJson} > /dev/null 2>&1 &";
+        exec($cmd);
+    }
+
+    error_log("Email queued in background: {$emailType}");
+    return true;
+}
+
 // Send email - automatically chooses between SMTP, SES API, SendGrid, or PHP mail()
 function sendEmail($to, $subject, $htmlBody, $textBody = '') {
     // Get email settings from database

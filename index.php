@@ -61,13 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $referralsEnabled == '1') {
         $result = createReferral($referrerData, $childrenData);
 
         if ($result['success']) {
-            // Send confirmation email
-            sendReferralConfirmation(
-                $referrerData['email'],
-                $referrerData['name'],
-                count($childrenData),
-                $result['household_id']
-            );
+            // Queue confirmation email to send in background (non-blocking)
+            queueEmailInBackground('referral_confirmation', [
+                'email' => $referrerData['email'],
+                'name' => $referrerData['name'],
+                'child_count' => count($childrenData),
+                'household_id' => $result['household_id']
+            ]);
 
             $success = true;
         } else {

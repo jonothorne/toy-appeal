@@ -187,8 +187,10 @@ function updateReferralStatus($referralId, $newStatus, $userId = null, $zoneId =
                 $allReady = checkIfAllHouseholdChildrenReady($referral['household_id']);
 
                 if ($allReady) {
-                    // All children are ready - send the email!
-                    sendCollectionReadyEmail($referralId);
+                    // All children are ready - queue email in background!
+                    queueEmailInBackground('collection_ready', [
+                        'referral_id' => $referralId
+                    ]);
                 }
                 // If not all ready yet, don't send email - wait for the last child
             }

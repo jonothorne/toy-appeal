@@ -33,3 +33,8 @@ COMMENT='Permanent audit log of deleted referrals for GDPR compliance';
 INSERT INTO settings (setting_key, setting_value)
 VALUES ('email_method', 'mail')
 ON DUPLICATE KEY UPDATE setting_value = 'mail';
+
+-- 4. Enable background email processing (prevents page load delays)
+INSERT INTO settings (setting_key, setting_value)
+VALUES ('background_emails', '1')
+ON DUPLICATE KEY UPDATE setting_value = '1';
