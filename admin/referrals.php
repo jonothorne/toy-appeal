@@ -2,6 +2,74 @@
 $pageTitle = "Referrals";
 require_once __DIR__ . '/includes/admin_header.php';
 
+// Handle bulk operations
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_action'])) {
+    $bulkAction = $_POST['bulk_action'];
+    $selectedIds = $_POST['selected_referrals'] ?? [];
+
+    if (!empty($selectedIds) && is_array($selectedIds)) {
+        $successCount = 0;
+        $failCount = 0;
+
+        foreach ($selectedIds as $refId) {
+            $refId = intval($refId);
+
+            switch ($bulkAction) {
+                case 'mark_fulfilled':
+                    if (updateReferralStatus($refId, 'fulfilled', $currentUser['id'])) {
+                        $successCount++;
+                    } else {
+                        $failCount++;
+                    }
+                    break;
+
+                case 'mark_located':
+                    if (updateReferralStatus($refId, 'located', $currentUser['id'])) {
+                        $successCount++;
+                    } else {
+                        $failCount++;
+                    }
+                    break;
+
+                case 'mark_ready':
+                    if (updateReferralStatus($refId, 'ready_for_collection', $currentUser['id'])) {
+                        $successCount++;
+                    } else {
+                        $failCount++;
+                    }
+                    break;
+
+                case 'mark_collected':
+                    if (updateReferralStatus($refId, 'collected', $currentUser['id'])) {
+                        $successCount++;
+                    } else {
+                        $failCount++;
+                    }
+                    break;
+
+                case 'assign_zone':
+                    $zoneId = intval($_POST['bulk_zone_id'] ?? 0);
+                    if (updateReferralStatus($refId, null, $currentUser['id'], $zoneId, true)) {
+                        $successCount++;
+                    } else {
+                        $failCount++;
+                    }
+                    break;
+            }
+        }
+
+        $message = "Bulk operation completed: {$successCount} successful";
+        if ($failCount > 0) {
+            $message .= ", {$failCount} failed";
+        }
+        $_SESSION['message'] = $message;
+
+        // Redirect to clear POST data
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET));
+        exit;
+    }
+}
+
 // Get search parameters
 $search = trim($_GET['search'] ?? '');
 $status = $_GET['status'] ?? '';
@@ -86,6 +154,44 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
         </form>
     </div>
 
+    <!-- Bulk Operations (Desktop only) -->
+    <?php if (!empty($result['results'])): ?>
+    <div class="hidden md:block bg-white rounded-lg shadow p-4">
+        <form method="POST" action="" id="bulkForm">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="selectAll" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="selectAll" class="text-sm font-medium text-gray-700">Select All</label>
+                    <span id="selectedCount" class="text-sm text-gray-500">(0 selected)</span>
+                </div>
+
+                <div class="flex-1 flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700">Bulk Action:</label>
+                    <select name="bulk_action" id="bulkAction" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option value="">Choose action...</option>
+                        <option value="mark_fulfilled">Mark as Fulfilled</option>
+                        <option value="mark_located">Mark as Located</option>
+                        <option value="mark_ready">Mark as Ready for Collection</option>
+                        <option value="mark_collected">Mark as Collected</option>
+                        <option value="assign_zone">Assign to Zone...</option>
+                    </select>
+
+                    <select name="bulk_zone_id" id="bulkZone" class="hidden px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option value="">Select Zone...</option>
+                        <?php foreach ($allZones as $z): ?>
+                            <option value="<?php echo $z['id']; ?>"><?php echo e($z['zone_name']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed" id="bulkSubmit" disabled>
+                        Apply to Selected
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <?php endif; ?>
+
     <!-- Results -->
     <div class="bg-white rounded-lg shadow">
         <div class="px-4 sm:px-6 py-4 border-b border-gray-200">
@@ -150,6 +256,9 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
+                            <th class="px-4 py-3 text-left">
+                                <span class="sr-only">Select</span>
+                            </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Child</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referrer</th>
@@ -163,6 +272,11 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                     <tbody class="bg-white divide-y divide-gray-200">
                         <?php foreach ($result['results'] as $referral): ?>
                             <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <input type="checkbox" name="selected_referrals[]" value="<?php echo $referral['id']; ?>"
+                                           class="referral-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                           form="bulkForm">
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-blue-600">
                                         <a href="view_referral.php?id=<?php echo $referral['id']; ?>" class="hover:underline">
@@ -266,5 +380,91 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selectAllCheckbox = document.getElementById('selectAll');
+    const referralCheckboxes = document.querySelectorAll('.referral-checkbox');
+    const selectedCount = document.getElementById('selectedCount');
+    const bulkSubmit = document.getElementById('bulkSubmit');
+    const bulkAction = document.getElementById('bulkAction');
+    const bulkZone = document.getElementById('bulkZone');
+
+    // Update selected count
+    function updateSelectedCount() {
+        const checked = document.querySelectorAll('.referral-checkbox:checked').length;
+        selectedCount.textContent = `(${checked} selected)`;
+        bulkSubmit.disabled = checked === 0;
+    }
+
+    // Select all checkbox
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            referralCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateSelectedCount();
+        });
+    }
+
+    // Individual checkboxes
+    referralCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            updateSelectedCount();
+
+            // Update select all checkbox
+            const allChecked = Array.from(referralCheckboxes).every(cb => cb.checked);
+            const someChecked = Array.from(referralCheckboxes).some(cb => cb.checked);
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = allChecked;
+                selectAllCheckbox.indeterminate = someChecked && !allChecked;
+            }
+        });
+    });
+
+    // Show/hide zone dropdown based on action
+    if (bulkAction) {
+        bulkAction.addEventListener('change', function() {
+            if (this.value === 'assign_zone') {
+                bulkZone.classList.remove('hidden');
+            } else {
+                bulkZone.classList.add('hidden');
+            }
+        });
+    }
+
+    // Confirm before bulk action
+    document.getElementById('bulkForm').addEventListener('submit', function(e) {
+        const action = bulkAction.value;
+        const count = document.querySelectorAll('.referral-checkbox:checked').length;
+
+        if (!action) {
+            e.preventDefault();
+            alert('Please select an action');
+            return false;
+        }
+
+        if (action === 'assign_zone' && !bulkZone.value) {
+            e.preventDefault();
+            alert('Please select a zone');
+            return false;
+        }
+
+        const actionNames = {
+            'mark_fulfilled': 'mark as Fulfilled',
+            'mark_located': 'mark as Located',
+            'mark_ready': 'mark as Ready for Collection',
+            'mark_collected': 'mark as Collected',
+            'assign_zone': 'assign to zone'
+        };
+
+        const confirmed = confirm(`Are you sure you want to ${actionNames[action]} ${count} referral(s)?`);
+        if (!confirmed) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/admin_footer.php'; ?>
