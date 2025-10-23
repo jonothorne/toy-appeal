@@ -429,8 +429,20 @@ function sendCollectionReadyEmail($referralId) {
         : "Parcel Ready for Collection - {$referral['reference_number']}";
 
     $siblingsList = '';
+    $qrCodeSection = '';
     foreach ($siblings as $sibling) {
         $siblingsList .= "<li><strong>{$sibling['reference_number']}</strong> - Child initials: {$sibling['child_initials']}</li>";
+
+        // Generate QR code URL for this referral
+        $collectionUrl = SITE_URL . "/admin/collect.php?ref=" . urlencode($sibling['reference_number']);
+        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($collectionUrl);
+
+        $qrCodeSection .= "
+        <div style='text-align: center; margin: 20px 0; padding: 15px; background: white; border-radius: 8px;'>
+            <p style='font-weight: bold; margin-bottom: 10px;'>{$sibling['reference_number']}</p>
+            <img src='{$qrCodeUrl}' alt='QR Code for {$sibling['reference_number']}' style='max-width: 200px; height: auto; border: 2px solid #e5e7eb; border-radius: 8px;' />
+            <p style='font-size: 12px; color: #6b7280; margin-top: 10px;'>Scan to mark as collected</p>
+        </div>";
     }
 
     $htmlBody = "
@@ -473,7 +485,13 @@ function sendCollectionReadyEmail($referralId) {
                     " . (!empty($referral['zone_location']) ? "<p><strong>Warehouse Location:</strong> {$referral['zone_location']}</p>" : (!empty($referral['zone_name']) ? "<p><strong>Warehouse Location:</strong> {$referral['zone_name']}</p>" : "")) . "
                 </div>
 
-                <p>Please bring this email or note the reference numbers above when collecting.</p>
+                <div class='info-box'>
+                    <h3>Quick Collection - Scan QR Code" . ($childCount > 1 ? 's' : '') . ":</h3>
+                    <p style='font-size: 14px; color: #6b7280;'>Show this QR code" . ($childCount > 1 ? ' for each parcel' : '') . " at collection for instant check-in:</p>
+                    {$qrCodeSection}
+                </div>
+
+                <p>You can scan the QR code" . ($childCount > 1 ? 's' : '') . " above for quick collection, or note the reference numbers when collecting.</p>
                 <p>Thank you for your continued partnership in making Christmas special for these families!</p>
             </div>
             <div class='footer'>
