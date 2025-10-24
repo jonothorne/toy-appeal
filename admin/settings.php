@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             updateSetting('collection_location', $_POST['collection_location'] ?? '');
             updateSetting('collection_hours', $_POST['collection_hours'] ?? '');
             updateSetting('current_year', $_POST['current_year'] ?? date('Y'));
+            updateSetting('collection_reminders_enabled', $_POST['collection_reminders_enabled'] ?? '0');
+            updateSetting('collection_reminder_days', $_POST['collection_reminder_days'] ?? '3');
             $message = "General settings updated successfully!";
             break;
 
@@ -219,6 +221,39 @@ foreach ($settingsRows as $row) {
                         <label class="block text-sm font-medium text-gray-700 mb-2">Collection Hours</label>
                         <input type="text" name="collection_hours" value="<?php echo e($settings['collection_hours'] ?? ''); ?>"
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Collection Reminders</h3>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="collection_reminders_enabled" value="1"
+                                           <?php echo ($settings['collection_reminders_enabled'] ?? '1') == '1' ? 'checked' : ''; ?>
+                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                           id="collection_reminders_toggle">
+                                    <span class="ml-2 text-sm text-gray-700">Enable Collection Reminders</span>
+                                </label>
+                                <p class="text-xs text-gray-500 mt-1 ml-6">Send automatic reminder emails for uncollected parcels</p>
+                            </div>
+
+                            <div id="reminder_days_field">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Send Reminder After (Days)</label>
+                                <input type="number" name="collection_reminder_days"
+                                       value="<?php echo e($settings['collection_reminder_days'] ?? '3'); ?>"
+                                       min="1" max="30"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <p class="text-xs text-gray-500 mt-1">Number of days after parcel is ready for collection before sending reminder</p>
+                            </div>
+
+                            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+                                <p class="text-sm text-blue-700">
+                                    <strong>How it works:</strong> A cron job will check daily for parcels that have been ready for collection
+                                    for the specified number of days and send reminder emails automatically. Each parcel will only receive one reminder.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit"
@@ -622,6 +657,24 @@ function toggleEditZone(zoneId) {
         editMode.style.display = 'block';
     }
 }
+
+// Toggle collection reminder days field
+document.addEventListener('DOMContentLoaded', function() {
+    const reminderToggle = document.getElementById('collection_reminders_toggle');
+    const reminderDaysField = document.getElementById('reminder_days_field');
+
+    if (reminderToggle && reminderDaysField) {
+        function updateReminderFieldVisibility() {
+            reminderDaysField.style.display = reminderToggle.checked ? 'block' : 'none';
+        }
+
+        // Set initial state
+        updateReminderFieldVisibility();
+
+        // Update on change
+        reminderToggle.addEventListener('change', updateReminderFieldVisibility);
+    }
+});
 </script>
 
 <?php require_once __DIR__ . '/includes/admin_footer.php'; ?>

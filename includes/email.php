@@ -549,3 +549,166 @@ function getEmailTemplate($title, $content) {
     </html>
     ";
 }
+
+// Send collection reminder email for uncollected parcels
+function sendCollectionReminderEmail($referralId) {
+    // Get referral and household details
+    $sql = "SELECT r.*, h.referrer_name, h.referrer_email, h.referrer_organisation, z.zone_name, z.location as zone_location
+            FROM referrals r
+            JOIN households h ON r.household_id = h.id
+            LEFT JOIN zones z ON r.zone_id = z.id
+            WHERE r.id = ?";
+
+    $referral = getRow($sql, "i", [$referralId]);
+
+    if (!$referral) {
+        return false;
+    }
+
+    // Get all uncollected siblings in the same household that are ready for collection
+    $siblings = getRows(
+        "SELECT reference_number, child_initials, created_at FROM referrals
+         WHERE household_id = ?
+         AND status = 'ready_for_collection'
+         AND (collection_reminder_sent_at IS NULL OR collection_reminder_sent_at < DATE_SUB(NOW(), INTERVAL 30 DAY))",
+        "i",
+        [$referral['household_id']]
+    );
+
+    if (empty($siblings)) {
+        return false;
+    }
+
+    $siteName = getSetting('site_name', 'Alive Church Christmas Toy Appeal');
+    $collectionLocation = getSetting('collection_location', 'Main Warehouse');
+    $collectionHours = getSetting('collection_hours', 'Monday-Friday 9am-5pm');
+
+    $childCount = count($siblings);
+    $subject = $childCount > 1
+        ? "Reminder: {$childCount} Parcels Waiting for Collection"
+        : "Reminder: Parcel Waiting for Collection - {$referral['reference_number']}";
+
+    // Calculate how many days the parcels have been waiting
+    $oldestDate = null;
+    foreach ($siblings as $sibling) {
+        if (!$oldestDate || strtotime($sibling['created_at']) < strtotime($oldestDate)) {
+            $oldestDate = $sibling['created_at'];
+        }
+    }
+    $daysWaiting = floor((time() - strtotime($oldestDate)) / (60 * 60 * 24));
+
+    $siblingsList = '';
+    $qrCodeSection = '';
+    foreach ($siblings as $sibling) {
+        $siblingsList .= "<li><strong>{$sibling['reference_number']}</strong> - Child initials: {$sibling['child_initials']}</li>";
+
+        // Generate QR code URL for this referral
+        $collectionUrl = SITE_URL . "/admin/collect.php?ref=" . urlencode($sibling['reference_number']);
+        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($collectionUrl);
+
+        $qrCodeSection .= "
+        <div style='text-align: center; margin: 20px 0; padding: 15px; background: white; border-radius: 8px;'>
+            <p style='font-weight: bold; margin-bottom: 10px;'>{$sibling['reference_number']}</p>
+            <img src='{$qrCodeUrl}' alt='QR Code for {$sibling['reference_number']}' style='max-width: 200px; height: auto; border: 2px solid #e5e7eb; border-radius: 8px;' />
+            <p style='font-size: 12px; color: #6b7280; margin-top: 10px;'>Scan to mark as collected</p>
+        </div>";
+    }
+
+    $htmlBody = "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset='UTF-8'>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: #F59E0B; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+            .info-box { background: white; border-left: 4px solid #F59E0B; padding: 15px; margin: 20px 0; }
+            .urgent-box { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 15px; margin: 20px 0; }
+            .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
+            ul { padding-left: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <img src='http://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
+            <div class='header'>
+                <h1>⏰ Collection Reminder</h1>
+            </div>
+            <div class='content'>
+                <p>Dear {$referral['referrer_name']},</p>
+                <p>This is a friendly reminder that <strong>{$childCount} toy parcel(s)</strong> for this family " . ($childCount == 1 ? 'is' : 'are') . " waiting to be collected.</p>
+
+                <div class='urgent-box'>
+                    <p style='margin: 0; font-size: 16px;'><strong>⏱ Waiting for {$daysWaiting} " . ($daysWaiting == 1 ? 'day' : 'days') . "</strong></p>
+                    <p style='margin: 5px 0 0 0; font-size: 14px;'>Please collect as soon as possible to ensure timely delivery to the family.</p>
+                </div>
+
+                <div class='info-box'>
+                    <h3>Collection Details:</h3>
+                    <p><strong>Location:</strong> {$collectionLocation}</p>
+                    <p><strong>Hours:</strong> {$collectionHours}</p>
+                    <p><strong>Organisation:</strong> {$referral['referrer_organisation']}</p>
+                </div>
+
+                <div class='info-box'>
+                    <h3>Parcels Ready to Collect ({$childCount} " . ($childCount == 1 ? 'Child' : 'Children') . "):</h3>
+                    <ul>
+                        {$siblingsList}
+                    </ul>
+                    " . (!empty($referral['zone_location']) ? "<p><strong>Warehouse Location:</strong> {$referral['zone_location']}</p>" : (!empty($referral['zone_name']) ? "<p><strong>Warehouse Location:</strong> {$referral['zone_name']}</p>" : "")) . "
+                </div>
+
+                <div class='info-box'>
+                    <h3>Quick Collection - Scan QR Code" . ($childCount > 1 ? 's' : '') . ":</h3>
+                    <p style='font-size: 14px; color: #6b7280;'>Show this QR code" . ($childCount > 1 ? ' for each parcel' : '') . " at collection for instant check-in:</p>
+                    {$qrCodeSection}
+                </div>
+
+                <p>If you have already collected " . ($childCount == 1 ? 'this parcel' : 'these parcels') . ", please disregard this reminder.</p>
+                <p>If you are unable to collect, please contact us as soon as possible so we can make alternative arrangements.</p>
+                <p>Thank you for your partnership in making Christmas special for these families!</p>
+            </div>
+            <div class='footer'>
+                <p><strong>{$siteName}</strong></p>
+                <p>Alive Church, Nelson Street, Norwich NR2 4DR</p>
+                <p>Email: office@alive.me.uk</p>
+                <p>&copy; " . date('Y') . " {$siteName}. All rights reserved.</p>
+                <p style='font-size: 11px; color: #9ca3af; margin-top: 10px;'>
+                    You are receiving this reminder because parcel(s) are waiting to be collected. This is an automated reminder.
+                </p>
+                <p style='font-size: 11px; color: #9ca3af; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb;'>
+                    <strong>Your Data Rights:</strong> Under UK GDPR, you have the right to access, correct, or request deletion of your personal data.
+                    To exercise these rights or for any privacy questions, contact us at office@alive.me.uk.
+                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #2563eb;'>Privacy Policy</a>.
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>
+    ";
+
+    // Send the email
+    $result = sendEmail($referral['referrer_email'], $subject, $htmlBody);
+
+    // If successful, mark all siblings as having received a reminder
+    if ($result) {
+        foreach ($siblings as $sibling) {
+            $refId = getRow(
+                "SELECT id FROM referrals WHERE reference_number = ?",
+                "s",
+                [$sibling['reference_number']]
+            );
+            if ($refId) {
+                updateQuery(
+                    "UPDATE referrals SET collection_reminder_sent_at = NOW() WHERE id = ?",
+                    "i",
+                    [$refId['id']]
+                );
+            }
+        }
+    }
+
+    return $result;
+}
