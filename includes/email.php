@@ -362,7 +362,7 @@ function sendReferralConfirmation($referrerEmail, $referrerName, $childrenCount,
     </head>
     <body>
         <div class='container'>
-            <img src='http://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
+            <img src='https://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
             <div class='header'>
                 <h1>{$siteName}</h1>
             </div>
@@ -462,7 +462,7 @@ function sendCollectionReadyEmail($referralId) {
     </head>
     <body>
         <div class='container'>
-            <img src='http://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
+            <img src='https://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
             <div class='header'>
                 <h1>Parcel Ready for Collection!</h1>
             </div>
@@ -632,7 +632,7 @@ function sendCollectionReminderEmail($referralId) {
     </head>
     <body>
         <div class='container'>
-            <img src='http://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
+            <img src='https://toyappeal.alivechur.ch/assets/imgs/logo.png' style='display: block;margin-left: auto;margin-right:auto;max-height:100px;margin-bottom:30px;'/>
             <div class='header'>
                 <h1>⏰ Collection Reminder</h1>
             </div>
