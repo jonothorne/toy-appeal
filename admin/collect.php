@@ -1,6 +1,13 @@
 <?php
-$pageTitle = "Quick Collection";
-require_once __DIR__ . '/includes/admin_header.php';
+// Load required files BEFORE any output
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+// Require login
+requireLogin();
+$currentUser = getCurrentUser();
 
 // Handle collection action
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reference_number'])) {
@@ -60,6 +67,10 @@ $successMessage = $_SESSION['success_message'] ?? null;
 $errorMessage = $_SESSION['error_message'] ?? null;
 $collectedReferral = $_SESSION['collected_referral'] ?? null;
 unset($_SESSION['success_message'], $_SESSION['error_message'], $_SESSION['collected_referral']);
+
+// NOW load the header (after all redirects are done)
+$pageTitle = "Quick Collection";
+require_once __DIR__ . '/includes/admin_header.php';
 ?>
 
 <style>
