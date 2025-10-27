@@ -599,7 +599,7 @@ foreach ($settingsRows as $row) {
                                         <div class="flex space-x-2">
                                             <?php if ($zone['is_active']): ?>
                                                 <button onclick="toggleEditZone(<?php echo $zone['id']; ?>)"
-                                                        class="text-[#eb008b] hover:text-[#c00074] text-sm font-medium">
+                                                        class="text-gray-900 hover:text-gray-700 text-sm font-medium">
                                                     Edit
                                                 </button>
                                                 <form method="POST" action="" onsubmit="return handleConfirmSubmit(event, 'Deactivate Zone', 'Are you sure you want to deactivate this zone? It will be hidden but can be reactivated later.', 'Deactivate', 'bg-red-600 text-white hover:bg-red-700');" class="inline">
