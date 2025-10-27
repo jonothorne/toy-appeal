@@ -413,7 +413,7 @@ foreach ($settingsRows as $row) {
                                 Last login: <?php echo $user['last_login'] ? formatDate($user['last_login']) : 'Never'; ?>
                             </div>
                             <?php if ($user['is_active'] && $user['id'] != $currentUser['id']): ?>
-                                <form method="POST" action="" onsubmit="return confirm('Are you sure you want to deactivate this user?');">
+                                <form method="POST" action="" onsubmit="return handleConfirmSubmit(event, 'Deactivate User', 'Are you sure you want to deactivate this user? They will no longer be able to log in.', 'Deactivate', 'bg-red-600 text-white hover:bg-red-700');">
                                     <input type="hidden" name="action" value="delete_user">
                                     <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
                                     <button type="submit"
@@ -602,7 +602,7 @@ foreach ($settingsRows as $row) {
                                                         class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                                                     Edit
                                                 </button>
-                                                <form method="POST" action="" onsubmit="return confirm('Are you sure you want to deactivate this zone?');" class="inline">
+                                                <form method="POST" action="" onsubmit="return handleConfirmSubmit(event, 'Deactivate Zone', 'Are you sure you want to deactivate this zone? It will be hidden but can be reactivated later.', 'Deactivate', 'bg-red-600 text-white hover:bg-red-700');" class="inline">
                                                     <input type="hidden" name="action" value="delete_zone">
                                                     <input type="hidden" name="zone_id" value="<?php echo $zone['id']; ?>">
                                                     <button type="submit"
@@ -619,7 +619,7 @@ foreach ($settingsRows as $row) {
                                                         Reactivate
                                                     </button>
                                                 </form>
-                                                <form method="POST" action="" onsubmit="return confirm('Are you sure you want to permanently delete this zone? This cannot be undone!');" class="inline">
+                                                <form method="POST" action="" onsubmit="return handleConfirmSubmit(event, 'Delete Zone Permanently', 'Are you sure you want to permanently delete this zone? This action cannot be undone and will remove all zone data from the system.', 'Delete Permanently', 'bg-red-700 text-white hover:bg-red-800');" class="inline">
                                                     <input type="hidden" name="action" value="delete_zone_permanent">
                                                     <input type="hidden" name="zone_id" value="<?php echo $zone['id']; ?>">
                                                     <button type="submit"
@@ -722,6 +722,98 @@ document.addEventListener('DOMContentLoaded', function() {
         reminderToggle.addEventListener('change', updateReminderFieldVisibility);
     }
 });
+
+// Custom confirmation modal
+let confirmCallback = null;
+
+function showConfirmModal(title, message, confirmText, confirmColor, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    const modalTitle = document.getElementById('confirmModalTitle');
+    const modalMessage = document.getElementById('confirmModalMessage');
+    const confirmBtn = document.getElementById('confirmModalBtn');
+
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    confirmBtn.textContent = confirmText;
+
+    // Set button color
+    confirmBtn.className = 'px-6 py-2 rounded-lg font-medium transition ' + confirmColor;
+
+    confirmCallback = onConfirm;
+    modal.classList.remove('hidden');
+
+    // Focus on confirm button after a short delay
+    setTimeout(() => confirmBtn.focus(), 100);
+}
+
+function hideConfirmModal() {
+    document.getElementById('confirmModal').classList.add('hidden');
+    confirmCallback = null;
+}
+
+function confirmModalAction() {
+    if (confirmCallback) {
+        confirmCallback();
+    }
+    hideConfirmModal();
+}
+
+// Handle form submissions with confirmation
+function handleConfirmSubmit(event, title, message, confirmText, confirmColor) {
+    event.preventDefault();
+    const form = event.target;
+
+    showConfirmModal(title, message, confirmText, confirmColor, function() {
+        form.submit();
+    });
+
+    return false;
+}
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('confirmModal');
+        if (modal && !modal.classList.contains('hidden')) {
+            hideConfirmModal();
+        }
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('confirmModal')?.addEventListener('click', function(event) {
+    if (event.target === this) {
+        hideConfirmModal();
+    }
+});
 </script>
+
+<!-- Confirmation Modal -->
+<div id="confirmModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+        <div class="mt-3">
+            <div class="flex items-center mb-4">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100">
+                    <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 text-center mb-2" id="confirmModalTitle">Confirm Action</h3>
+            <p class="text-sm text-gray-600 text-center mb-6" id="confirmModalMessage">Are you sure?</p>
+            <div class="flex space-x-3">
+                <button onclick="hideConfirmModal()"
+                        class="flex-1 px-6 py-2 bg-gray-200 text-gray-800 rounded-lg font-medium hover:bg-gray-300 transition">
+                    Cancel
+                </button>
+                <button onclick="confirmModalAction()"
+                        id="confirmModalBtn"
+                        class="flex-1 px-6 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php require_once __DIR__ . '/includes/admin_footer.php'; ?>
