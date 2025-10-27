@@ -123,6 +123,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Failed to deactivate zone.";
             }
             break;
+
+        case 'reactivate_zone':
+            $zoneId = intval($_POST['zone_id'] ?? 0);
+            if (updateQuery("UPDATE zones SET is_active = 1 WHERE id = ?", "i", [$zoneId])) {
+                $message = "Zone reactivated successfully!";
+            } else {
+                $error = "Failed to reactivate zone.";
+            }
+            break;
+
+        case 'delete_zone_permanent':
+            $zoneId = intval($_POST['zone_id'] ?? 0);
+
+            // Check if any referrals are using this zone
+            $referralCount = getRow(
+                "SELECT COUNT(*) as count FROM referrals WHERE zone_id = ?",
+                "i",
+                [$zoneId]
+            );
+
+            if ($referralCount['count'] > 0) {
+                $error = "Cannot delete zone: {$referralCount['count']} referral(s) are currently assigned to this zone. Deactivate the zone instead.";
+            } else {
+                if (updateQuery("DELETE FROM zones WHERE id = ?", "i", [$zoneId])) {
+                    $message = "Zone permanently deleted!";
+                } else {
+                    $error = "Failed to delete zone.";
+                }
+            }
+            break;
     }
 }
 
@@ -578,6 +608,23 @@ foreach ($settingsRows as $row) {
                                                     <button type="submit"
                                                             class="text-red-600 hover:text-red-800 text-sm font-medium">
                                                         Deactivate
+                                                    </button>
+                                                </form>
+                                            <?php else: ?>
+                                                <form method="POST" action="" class="inline">
+                                                    <input type="hidden" name="action" value="reactivate_zone">
+                                                    <input type="hidden" name="zone_id" value="<?php echo $zone['id']; ?>">
+                                                    <button type="submit"
+                                                            class="text-green-600 hover:text-green-800 text-sm font-medium">
+                                                        Reactivate
+                                                    </button>
+                                                </form>
+                                                <form method="POST" action="" onsubmit="return confirm('Are you sure you want to permanently delete this zone? This cannot be undone!');" class="inline">
+                                                    <input type="hidden" name="action" value="delete_zone_permanent">
+                                                    <input type="hidden" name="zone_id" value="<?php echo $zone['id']; ?>">
+                                                    <button type="submit"
+                                                            class="text-red-600 hover:text-red-800 text-sm font-medium">
+                                                        Delete Permanently
                                                     </button>
                                                 </form>
                                             <?php endif; ?>
