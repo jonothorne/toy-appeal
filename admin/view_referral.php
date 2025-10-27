@@ -118,7 +118,7 @@ foreach ($zones as $zone) {
 <div class="space-y-6">
     <!-- Back Button -->
     <div>
-        <a href="referrals.php" class="text-blue-600 hover:text-blue-800 flex items-center">
+        <a href="referrals.php" class="text-[#eb008b] hover:text-[#c00074] flex items-center">
             <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
@@ -170,7 +170,7 @@ foreach ($zones as $zone) {
                 <!-- Action Buttons -->
                 <div class="mt-4 flex gap-2">
                     <a href="edit_referral.php?id=<?php echo $referralId; ?>"
-                       class="px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition">
+                       class="px-3 py-1.5 text-xs font-medium text-[#eb008b] bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition">
                         ✏️ Edit Referral
                     </a>
                     <button onclick="showDeleteModal()"
@@ -278,7 +278,7 @@ foreach ($zones as $zone) {
                     <div>
                         <p class="text-sm text-gray-600">Email</p>
                         <p class="font-medium text-gray-900">
-                            <a href="mailto:<?php echo e($referral['referrer_email']); ?>" class="text-blue-600 hover:underline">
+                            <a href="mailto:<?php echo e($referral['referrer_email']); ?>" class="text-[#eb008b] hover:underline">
                                 <?php echo e($referral['referrer_email']); ?>
                             </a>
                         </p>
@@ -314,7 +314,7 @@ foreach ($zones as $zone) {
                                 <div class="flex items-center space-x-3">
                                     <?php echo getStatusBadge($sibling['status']); ?>
                                     <a href="view_referral.php?id=<?php echo $sibling['id']; ?>"
-                                       class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                       class="text-[#eb008b] hover:text-[#c00074] text-sm font-medium">
                                         View
                                     </a>
                                 </div>
@@ -364,9 +364,9 @@ foreach ($zones as $zone) {
                     <input type="hidden" name="action" value="add_note">
                     <textarea name="note" rows="3" required
                               placeholder="Add a note..."
-                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"></textarea>
                     <button type="submit"
-                            class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            class="mt-2 px-4 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                         Add Note
                     </button>
                 </form>
@@ -384,7 +384,7 @@ foreach ($zones as $zone) {
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-2">New Status</label>
                         <select name="status" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                             <option value="pending" <?php echo $referral['status'] == 'pending' ? 'selected' : ''; ?>>Pending</option>
                             <option value="fulfilled" <?php echo $referral['status'] == 'fulfilled' ? 'selected' : ''; ?>>Fulfilled</option>
                             <option value="located" <?php echo $referral['status'] == 'located' ? 'selected' : ''; ?>>Located</option>
@@ -396,7 +396,7 @@ foreach ($zones as $zone) {
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Warehouse Zone</label>
                         <select name="zone_id"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                             <option value="">Not Assigned</option>
                             <?php foreach ($zones as $zone):
                                 $allocation = $zoneAllocations[$zone['id']];

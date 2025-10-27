@@ -150,7 +150,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Referral Agreement Section -->
                     <div class="mb-8 bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
                         <div class="flex items-start mb-4">
-                            <svg class="h-6 w-6 text-blue-600 mt-1 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="h-6 w-6 text-[#eb008b] mt-1 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             <div class="flex-1">
@@ -161,7 +161,7 @@ require_once __DIR__ . '/includes/header.php';
                                 </p>
                                 <a href="<?php echo SITE_URL; ?>/assets/Toy_Appeal_Referral_Agreement.pdf"
                                    target="_blank"
-                                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm">
+                                   class="inline-flex items-center px-4 py-2 bg-[#eb008b] text-white font-medium rounded-lg hover:bg-[#c00074] transition shadow-sm">
                                     <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
@@ -177,14 +177,14 @@ require_once __DIR__ . '/includes/header.php';
                                            name="referral_agreement"
                                            type="checkbox"
                                            required
-                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                           class="w-4 h-4 text-[#eb008b] border-gray-300 rounded focus:ring-[#eb008b]">
                                 </div>
                                 <div class="ml-3">
                                     <label for="referral_agreement" class="text-sm font-medium text-blue-900">
                                         <span class="text-red-600">*</span> I have read and agree to the
                                         <a href="<?php echo SITE_URL; ?>/assets/Toy_Appeal_Referral_Agreement.pdf"
                                            target="_blank"
-                                           class="text-blue-700 underline hover:text-blue-800">
+                                           class="text-blue-700 underline hover:text-[#c00074]">
                                             Referral Agreement
                                         </a>
                                     </label>
@@ -203,37 +203,37 @@ require_once __DIR__ . '/includes/header.php';
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Your Name <span class="text-red-500">*</span></label>
                                 <input type="text" name="referrer_name" required
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['referrer_name'] ?? ''); ?>">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Organisation <span class="text-red-500">*</span></label>
                                 <input type="text" name="referrer_organisation" required
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['referrer_organisation'] ?? ''); ?>">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Name of Team</label>
                                 <input type="text" name="referrer_team"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['referrer_team'] ?? ''); ?>">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Contact</label>
                                 <input type="text" name="secondary_contact"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['secondary_contact'] ?? ''); ?>">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number <span class="text-red-500">*</span></label>
                                 <input type="tel" name="referrer_phone" required
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['referrer_phone'] ?? ''); ?>">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Email Address <span class="text-red-500">*</span></label>
                                 <input type="email" name="referrer_email" required
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['referrer_email'] ?? ''); ?>">
                             </div>
                         </div>
@@ -246,13 +246,13 @@ require_once __DIR__ . '/includes/header.php';
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Family Postcode <span class="text-red-500">*</span></label>
                                 <input type="text" name="postcode" required
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                        value="<?php echo e($_POST['postcode'] ?? ''); ?>">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">How long has the family been known to your organisation? <span class="text-red-500">*</span></label>
                                 <select name="duration_known" required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                                     <option value="">Select...</option>
                                     <option value="<1 month">&lt;1 month</option>
                                     <option value="1-6 months">1-6 months</option>
@@ -266,7 +266,7 @@ require_once __DIR__ . '/includes/header.php';
                             <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
                             <textarea name="additional_notes" rows="3"
                                       placeholder="Any additional information about the family's circumstances..."
-                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?php echo e($_POST['additional_notes'] ?? ''); ?></textarea>
+                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"><?php echo e($_POST['additional_notes'] ?? ''); ?></textarea>
                         </div>
                     </div>
 
@@ -279,7 +279,7 @@ require_once __DIR__ . '/includes/header.php';
                             <!-- Children will be added here via JavaScript -->
                         </div>
                         <button type="button" onclick="addChild()"
-                                class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                                class="mt-4 px-4 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                             + Add Child
                         </button>
                     </div>
@@ -291,19 +291,19 @@ require_once __DIR__ . '/includes/header.php';
                             <div class="flex items-start">
                                 <div class="flex items-center h-5">
                                     <input id="gdpr_consent" name="gdpr_consent" type="checkbox" required
-                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                           class="w-4 h-4 text-[#eb008b] border-gray-300 rounded focus:ring-[#eb008b]">
                                 </div>
                                 <div class="ml-3">
                                     <label for="gdpr_consent" class="text-sm text-gray-700">
                                         <span class="font-medium">I consent to Alive Church collecting and processing the information provided in this referral form.</span>
                                         I understand that this data will be used solely for the purpose of processing this Christmas Toy Appeal referral and contacting me about collection arrangements.
                                         I understand that I have the right to request access to, correction of, or deletion of this data at any time by contacting
-                                        <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a>.
+                                        <a href="mailto:office@alive.me.uk" class="text-[#eb008b] hover:text-[#c00074] underline">office@alive.me.uk</a>.
                                         <span class="text-red-500">*</span>
                                     </label>
                                     <p class="text-xs text-gray-600 mt-2">
                                         For more information about how we handle your data, please read our
-                                        <a href="privacy.php" target="_blank" class="text-blue-600 hover:text-blue-800 underline">Privacy Policy</a>.
+                                        <a href="privacy.php" target="_blank" class="text-[#eb008b] hover:text-[#c00074] underline">Privacy Policy</a>.
                                     </p>
                                 </div>
                             </div>
@@ -349,18 +349,18 @@ function addChild() {
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Child Initials <span class="text-red-500">*</span></label>
                 <input type="text" name="children[${childCount}][initials]" required maxlength="10"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                 <p class="text-xs text-gray-500 mt-1">e.g., JD for John Doe</p>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Age <span class="text-red-500">*</span></label>
                 <input type="number" name="children[${childCount}][age]" required min="0" max="18"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Gender <span class="text-red-500">*</span></label>
                 <select name="children[${childCount}][gender]" required
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     <option value="">Select...</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -371,7 +371,7 @@ function addChild() {
             <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Special Requirements</label>
                 <textarea name="children[${childCount}][special_requirements]" rows="2"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                           placeholder="e.g., learning difficulties, sensory needs, disabilities"></textarea>
             </div>
         </div>

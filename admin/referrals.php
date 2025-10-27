@@ -100,7 +100,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
             <p class="mt-2 text-sm text-gray-600">Manage all toy referrals</p>
         </div>
         <a href="../index.php" target="_blank"
-           class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+           class="px-4 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
             + New Referral
         </a>
     </div>
@@ -113,12 +113,12 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                     <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
                     <input type="text" name="search" placeholder="Reference number, child initials, referrer name, organisation, postcode..."
                            value="<?php echo e($search); ?>"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                     <select name="status"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         <option value="">All Statuses</option>
                         <option value="pending" <?php echo $status === 'pending' ? 'selected' : ''; ?>>Pending</option>
                         <option value="fulfilled" <?php echo $status === 'fulfilled' ? 'selected' : ''; ?>>Fulfilled</option>
@@ -130,7 +130,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Zone</label>
                     <select name="zone"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         <option value="">All Zones</option>
                         <option value="unassigned" <?php echo $zone === 'unassigned' ? 'selected' : ''; ?>>Unassigned</option>
                         <?php foreach ($allZones as $z): ?>
@@ -143,7 +143,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
             </div>
             <div class="flex space-x-4">
                 <button type="submit"
-                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        class="px-6 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                     Search
                 </button>
                 <a href="referrals.php"
@@ -160,14 +160,14 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
         <form method="POST" action="" id="bulkForm">
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-2">
-                    <input type="checkbox" id="selectAll" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <input type="checkbox" id="selectAll" class="w-4 h-4 text-[#eb008b] border-gray-300 rounded focus:ring-[#eb008b]">
                     <label for="selectAll" class="text-sm font-medium text-gray-700">Select All</label>
                     <span id="selectedCount" class="text-sm text-gray-500">(0 selected)</span>
                 </div>
 
                 <div class="flex-1 flex items-center space-x-2">
                     <label class="text-sm font-medium text-gray-700">Bulk Action:</label>
-                    <select name="bulk_action" id="bulkAction" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+                    <select name="bulk_action" id="bulkAction" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] text-sm">
                         <option value="">Choose action...</option>
                         <option value="mark_fulfilled">Mark as Fulfilled</option>
                         <option value="mark_located">Mark as Located</option>
@@ -176,14 +176,14 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                         <option value="assign_zone">Assign to Zone...</option>
                     </select>
 
-                    <select name="bulk_zone_id" id="bulkZone" class="hidden px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+                    <select name="bulk_zone_id" id="bulkZone" class="hidden px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] text-sm">
                         <option value="">Select Zone...</option>
                         <?php foreach ($allZones as $z): ?>
                             <option value="<?php echo $z['id']; ?>"><?php echo e($z['zone_name']); ?></option>
                         <?php endforeach; ?>
                     </select>
 
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed" id="bulkSubmit" disabled>
+                    <button type="submit" class="px-4 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed" id="bulkSubmit" disabled>
                         Apply to Selected
                     </button>
                 </div>
@@ -213,7 +213,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                 <?php foreach ($result['results'] as $referral): ?>
                     <div class="border-b border-gray-200 p-4 hover:bg-gray-50">
                         <div class="flex justify-between items-start mb-2">
-                            <a href="view_referral.php?id=<?php echo $referral['id']; ?>" class="text-blue-600 font-semibold hover:underline">
+                            <a href="view_referral.php?id=<?php echo $referral['id']; ?>" class="text-[#eb008b] font-semibold hover:underline">
                                 <?php echo e($referral['reference_number']); ?>
                             </a>
                             <?php echo getStatusBadge($referral['status']); ?>
@@ -242,7 +242,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                                     <?php echo formatDate($referral['created_at'], 'd/m/Y'); ?>
                                 </span>
                                 <a href="view_referral.php?id=<?php echo $referral['id']; ?>"
-                                   class="text-blue-600 hover:text-blue-900 font-medium text-sm">
+                                   class="text-[#eb008b] hover:text-blue-900 font-medium text-sm">
                                     View →
                                 </a>
                             </div>
@@ -274,11 +274,11 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     <input type="checkbox" name="selected_referrals[]" value="<?php echo $referral['id']; ?>"
-                                           class="referral-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                           class="referral-checkbox w-4 h-4 text-[#eb008b] border-gray-300 rounded focus:ring-[#eb008b]"
                                            form="bulkForm">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-blue-600">
+                                    <div class="text-sm font-medium text-[#eb008b]">
                                         <a href="view_referral.php?id=<?php echo $referral['id']; ?>" class="hover:underline">
                                             <?php echo e($referral['reference_number']); ?>
                                         </a>
@@ -306,7 +306,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     <a href="view_referral.php?id=<?php echo $referral['id']; ?>"
-                                       class="text-blue-600 hover:text-blue-900 font-medium">
+                                       class="text-[#eb008b] hover:text-blue-900 font-medium">
                                         View
                                     </a>
                                 </td>
@@ -361,7 +361,7 @@ $result = searchReferrals($search, $status, $zone, $page, $perPage);
                                 for ($i = $startPage; $i <= $endPage; $i++):
                                 ?>
                                     <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $i])); ?>"
-                                       class="relative inline-flex items-center px-4 py-2 border <?php echo $i == $page ? 'bg-blue-50 border-blue-500 text-blue-600' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'; ?> text-sm font-medium">
+                                       class="relative inline-flex items-center px-4 py-2 border <?php echo $i == $page ? 'bg-blue-50 border-blue-500 text-[#eb008b]' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'; ?> text-sm font-medium">
                                         <?php echo $i; ?>
                                     </a>
                                 <?php endfor; ?>

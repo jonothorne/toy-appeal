@@ -182,14 +182,14 @@ $postcodeBreakdown = array_slice($postcodeBreakdown, 0, 10, true); // Top 10
             <div class="flex-1">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
                 <input type="date" name="start_date" value="<?php echo e($startDate); ?>"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b]">
             </div>
             <div class="flex-1">
                 <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
                 <input type="date" name="end_date" value="<?php echo e($endDate); ?>"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b]">
             </div>
-            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button type="submit" class="px-6 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                 Apply Filter
             </button>
             <a href="reports.php" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
@@ -208,7 +208,7 @@ $postcodeBreakdown = array_slice($postcodeBreakdown, 0, 10, true); // Top 10
                     <p class="text-xs text-gray-500 mt-1"><?php echo date('d M Y', strtotime($startDate)); ?> - <?php echo date('d M Y', strtotime($endDate)); ?></p>
                 </div>
                 <div class="p-3 bg-blue-100 rounded-lg">
-                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-8 h-8 text-[#eb008b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                 </div>
@@ -333,7 +333,7 @@ $postcodeBreakdown = array_slice($postcodeBreakdown, 0, 10, true); // Top 10
                             <td class="px-6 py-4 text-sm text-gray-600"><?php echo $percentage; ?>%</td>
                             <td class="px-6 py-4">
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-blue-600 h-2 rounded-full" style="width: <?php echo $percentage; ?>%"></div>
+                                    <div class="bg-[#eb008b] h-2 rounded-full" style="width: <?php echo $percentage; ?>%"></div>
                                 </div>
                             </td>
                         </tr>
@@ -352,7 +352,7 @@ $postcodeBreakdown = array_slice($postcodeBreakdown, 0, 10, true); // Top 10
             <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <?php foreach ($postcodeBreakdown as $area => $count): ?>
                     <div class="text-center p-4 bg-gray-50 rounded-lg">
-                        <div class="text-2xl font-bold text-blue-600"><?php echo e($area); ?></div>
+                        <div class="text-2xl font-bold text-[#eb008b]"><?php echo e($area); ?></div>
                         <div class="text-sm text-gray-600 mt-1"><?php echo number_format($count); ?> referrals</div>
                     </div>
                 <?php endforeach; ?>
@@ -374,7 +374,7 @@ new Chart(statusCtx, {
             data: <?php echo json_encode(array_values($statusBreakdown)); ?>,
             backgroundColor: [
                 '#9CA3AF', // pending - gray
-                '#3B82F6', // fulfilled - blue
+                '#eb008b', // fulfilled - brand pink
                 '#8B5CF6', // located - purple
                 '#EAB308', // ready - yellow
                 '#10B981'  // collected - green
@@ -406,7 +406,7 @@ new Chart(ageCtx, {
                 <?php echo $ageBreakdown['9-12'] ?? 0; ?>,
                 <?php echo $ageBreakdown['13+'] ?? 0; ?>
             ],
-            backgroundColor: '#3B82F6'
+            backgroundColor: '#eb008b'
         }]
     },
     options: {

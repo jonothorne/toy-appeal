@@ -66,7 +66,7 @@ require_once __DIR__ . '/../includes/header.php';
                         Username
                     </label>
                     <input type="text" id="username" name="username" required autofocus
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                            value="<?php echo e($_POST['username'] ?? ''); ?>">
                 </div>
 
@@ -75,17 +75,17 @@ require_once __DIR__ . '/../includes/header.php';
                         Password
                     </label>
                     <input type="password" id="password" name="password" required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                 </div>
 
                 <button type="submit"
-                        class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        class="w-full py-3 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition font-medium">
                     Sign In
                 </button>
             </form>
 
             <div class="mt-6 text-center">
-                <a href="../index.php" class="text-sm text-blue-600 hover:text-blue-500">
+                <a href="../index.php" class="text-sm text-[#eb008b] hover:text-[#c00074]">
                     &larr; Back to Referral Form
                 </a>
             </div>

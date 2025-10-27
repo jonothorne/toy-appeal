@@ -33,7 +33,7 @@ require_once __DIR__ . '/includes/header.php';
                     <p class="text-gray-700">Alive House</p>
                     <p class="text-gray-700">Nelson Street</p>
                     <p class="text-gray-700">Norwich, NR2 4DR</p>
-                    <p class="text-gray-700">Email: <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a></p>
+                    <p class="text-gray-700">Email: <a href="mailto:office@alive.me.uk" class="text-[#eb008b] hover:text-[#c00074] underline">office@alive.me.uk</a></p>
                 </div>
             </section>
 
@@ -123,7 +123,7 @@ require_once __DIR__ . '/includes/header.php';
                 </ul>
                 <p class="text-gray-700 mt-3">
                     To exercise any of these rights, please contact us at
-                    <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a>.
+                    <a href="mailto:office@alive.me.uk" class="text-[#eb008b] hover:text-[#c00074] underline">office@alive.me.uk</a>.
                     We will respond to your request within one month.
                 </p>
             </section>
@@ -140,7 +140,7 @@ require_once __DIR__ . '/includes/header.php';
                     <p class="text-gray-700">Wycliffe House, Water Lane</p>
                     <p class="text-gray-700">Wilmslow, Cheshire SK9 5AF</p>
                     <p class="text-gray-700">Phone: 0303 123 1113</p>
-                    <p class="text-gray-700">Website: <a href="https://ico.org.uk" target="_blank" class="text-blue-600 hover:text-blue-800 underline">www.ico.org.uk</a></p>
+                    <p class="text-gray-700">Website: <a href="https://ico.org.uk" target="_blank" class="text-[#eb008b] hover:text-[#c00074] underline">www.ico.org.uk</a></p>
                 </div>
             </section>
 
@@ -167,13 +167,13 @@ require_once __DIR__ . '/includes/header.php';
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Questions?</h3>
                 <p class="text-gray-700">
                     If you have any questions about this privacy policy or how we handle your data, please contact us at
-                    <a href="mailto:office@alive.me.uk" class="text-blue-600 hover:text-blue-800 underline">office@alive.me.uk</a>
+                    <a href="mailto:office@alive.me.uk" class="text-[#eb008b] hover:text-[#c00074] underline">office@alive.me.uk</a>
                 </p>
             </section>
 
             <!-- Back Link -->
             <div class="text-center pt-6 border-t">
-                <a href="index.php" class="text-blue-600 hover:text-blue-800 font-medium">
+                <a href="index.php" class="text-[#eb008b] hover:text-[#c00074] font-medium">
                     &larr; Back to Referral Form
                 </a>
             </div>

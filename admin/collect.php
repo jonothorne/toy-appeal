@@ -204,7 +204,7 @@ require_once __DIR__ . '/includes/admin_header.php';
             <div id="reader" class="mb-4"></div>
 
             <div class="text-center">
-                <button id="start-scan" class="scan-button px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+                <button id="start-scan" class="scan-button px-8 py-4 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition font-semibold">
                     <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
                     </svg>
@@ -229,7 +229,7 @@ require_once __DIR__ . '/includes/admin_header.php';
                     <input type="text"
                            name="reference_number"
                            placeholder="e.g. TOY-2025-0001"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-lg"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] text-lg"
                            required
                            autofocus>
                 </div>

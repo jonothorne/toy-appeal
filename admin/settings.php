@@ -193,19 +193,19 @@ foreach ($settingsRows as $row) {
     <div class="border-b border-gray-200 overflow-x-auto">
         <nav class="-mb-px flex space-x-4 sm:space-x-8 px-1">
             <a href="?tab=general"
-               class="<?php echo $activeTab == 'general' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+               class="<?php echo $activeTab == 'general' ? 'border-blue-500 text-[#eb008b]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                 General
             </a>
             <a href="?tab=email"
-               class="<?php echo $activeTab == 'email' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+               class="<?php echo $activeTab == 'email' ? 'border-blue-500 text-[#eb008b]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                 Email
             </a>
             <a href="?tab=users"
-               class="<?php echo $activeTab == 'users' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+               class="<?php echo $activeTab == 'users' ? 'border-blue-500 text-[#eb008b]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                 Users
             </a>
             <a href="?tab=zones"
-               class="<?php echo $activeTab == 'zones' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+               class="<?php echo $activeTab == 'zones' ? 'border-blue-500 text-[#eb008b]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; ?> whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                 Zones
             </a>
         </nav>
@@ -221,13 +221,13 @@ foreach ($settingsRows as $row) {
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Site Name</label>
                         <input type="text" name="site_name" value="<?php echo e($settings['site_name'] ?? ''); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Current Year</label>
                         <input type="number" name="current_year" value="<?php echo e($settings['current_year'] ?? date('Y')); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         <p class="text-xs text-gray-500 mt-1">Used for generating reference numbers</p>
                     </div>
 
@@ -235,7 +235,7 @@ foreach ($settingsRows as $row) {
                         <label class="flex items-center">
                             <input type="checkbox" name="enable_referrals" value="1"
                                    <?php echo ($settings['enable_referrals'] ?? '1') == '1' ? 'checked' : ''; ?>
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                   class="h-4 w-4 text-[#eb008b] focus:ring-[#eb008b] border-gray-300 rounded">
                             <span class="ml-2 text-sm text-gray-700">Enable Referral Form</span>
                         </label>
                         <p class="text-xs text-gray-500 mt-1 ml-6">Uncheck to temporarily disable new referrals</p>
@@ -244,13 +244,13 @@ foreach ($settingsRows as $row) {
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Collection Location</label>
                         <input type="text" name="collection_location" value="<?php echo e($settings['collection_location'] ?? ''); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Collection Hours</label>
                         <input type="text" name="collection_hours" value="<?php echo e($settings['collection_hours'] ?? ''); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
 
                     <div class="border-t border-gray-200 pt-6">
@@ -261,7 +261,7 @@ foreach ($settingsRows as $row) {
                                 <label class="flex items-center">
                                     <input type="checkbox" name="collection_reminders_enabled" value="1"
                                            <?php echo ($settings['collection_reminders_enabled'] ?? '1') == '1' ? 'checked' : ''; ?>
-                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                           class="h-4 w-4 text-[#eb008b] focus:ring-[#eb008b] border-gray-300 rounded"
                                            id="collection_reminders_toggle">
                                     <span class="ml-2 text-sm text-gray-700">Enable Collection Reminders</span>
                                 </label>
@@ -273,7 +273,7 @@ foreach ($settingsRows as $row) {
                                 <input type="number" name="collection_reminder_days"
                                        value="<?php echo e($settings['collection_reminder_days'] ?? '3'); ?>"
                                        min="1" max="30"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                                 <p class="text-xs text-gray-500 mt-1">Number of days after parcel is ready for collection before sending reminder</p>
                             </div>
 
@@ -287,7 +287,7 @@ foreach ($settingsRows as $row) {
                     </div>
 
                     <button type="submit"
-                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            class="px-6 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                         Save Changes
                     </button>
                 </div>
@@ -306,12 +306,12 @@ foreach ($settingsRows as $row) {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
                             <input type="text" name="smtp_host" value="<?php echo e($settings['smtp_host'] ?? ''); ?>"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
                             <input type="number" name="smtp_port" value="<?php echo e($settings['smtp_port'] ?? ''); ?>"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                     </div>
 
@@ -319,12 +319,12 @@ foreach ($settingsRows as $row) {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Username</label>
                             <input type="text" name="smtp_username" value="<?php echo e($settings['smtp_username'] ?? ''); ?>"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Password</label>
                             <input type="password" name="smtp_password" placeholder="Leave blank to keep current"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                     </div>
 
@@ -332,12 +332,12 @@ foreach ($settingsRows as $row) {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">From Email</label>
                             <input type="email" name="smtp_from_email" value="<?php echo e($settings['smtp_from_email'] ?? ''); ?>"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">From Name</label>
                             <input type="text" name="smtp_from_name" value="<?php echo e($settings['smtp_from_name'] ?? ''); ?>"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                     </div>
 
@@ -348,7 +348,7 @@ foreach ($settingsRows as $row) {
                     </div>
 
                     <button type="submit"
-                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            class="px-6 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                         Save Changes
                     </button>
                 </div>
@@ -368,22 +368,22 @@ foreach ($settingsRows as $row) {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
                             <input type="text" name="username" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                             <input type="text" name="full_name" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                             <input type="email" name="email" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                             <input type="password" name="password" required
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                         </div>
                         <button type="submit"
                                 class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
@@ -515,7 +515,7 @@ foreach ($settingsRows as $row) {
 
                             <div class="mt-3 flex justify-between items-center">
                                 <a href="referrals.php?zone=<?php echo $zone['id']; ?>"
-                                   class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                                   class="text-sm text-[#eb008b] hover:text-[#c00074] font-medium">
                                     View Referrals in this Zone →
                                 </a>
                                 <?php if ($percentage >= 100): ?>
@@ -542,21 +542,21 @@ foreach ($settingsRows as $row) {
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Zone Name <span class="text-red-500">*</span></label>
                                 <input type="text" name="zone_name" required
                                        placeholder="e.g., Zone A, Shelf 1, Area B"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                                 <p class="text-xs text-gray-500 mt-1">Internal reference for warehouse organization</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Location (shown to referrers)</label>
                                 <input type="text" name="location"
                                        placeholder="e.g., Row 3, Shelf 2 / Near main entrance"
-                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                                 <p class="text-xs text-gray-500 mt-1">This is shown in collection emails to help referrers find parcels</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Description (internal only)</label>
                                 <textarea name="description" rows="2"
                                           placeholder="e.g., Behind the blue shelving unit, next to the fire exit"
-                                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"></textarea>
                                 <p class="text-xs text-gray-500 mt-1">Internal notes for warehouse volunteers - NOT shown to referrers</p>
                             </div>
                             <button type="submit"
@@ -579,7 +579,7 @@ foreach ($settingsRows as $row) {
                                         <div class="flex-1">
                                             <p class="font-medium text-gray-900"><?php echo e($zone['zone_name']); ?></p>
                                             <?php if (!empty($zone['location'])): ?>
-                                                <p class="text-sm text-blue-600 mt-1">
+                                                <p class="text-sm text-[#eb008b] mt-1">
                                                     <span class="font-medium">📍 Location:</span> <?php echo e($zone['location']); ?>
                                                 </p>
                                             <?php endif; ?>
@@ -599,7 +599,7 @@ foreach ($settingsRows as $row) {
                                         <div class="flex space-x-2">
                                             <?php if ($zone['is_active']): ?>
                                                 <button onclick="toggleEditZone(<?php echo $zone['id']; ?>)"
-                                                        class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                                        class="text-[#eb008b] hover:text-[#c00074] text-sm font-medium">
                                                     Edit
                                                 </button>
                                                 <form method="POST" action="" onsubmit="return handleConfirmSubmit(event, 'Deactivate Zone', 'Are you sure you want to deactivate this zone? It will be hidden but can be reactivated later.', 'Deactivate', 'bg-red-600 text-white hover:bg-red-700');" class="inline">
@@ -643,33 +643,33 @@ foreach ($settingsRows as $row) {
                                                 <label class="block text-sm font-medium text-gray-700 mb-2">Zone Name <span class="text-red-500">*</span></label>
                                                 <input type="text" name="zone_name" required
                                                        value="<?php echo e($zone['zone_name']); ?>"
-                                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                                             </div>
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-700 mb-2">Location (shown to referrers)</label>
                                                 <input type="text" name="location"
                                                        value="<?php echo e($zone['location'] ?? ''); ?>"
                                                        placeholder="e.g., Row 3, Shelf 2"
-                                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                                                 <p class="text-xs text-gray-500 mt-1">Shown in collection emails</p>
                                             </div>
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-700 mb-2">Description (internal only)</label>
                                                 <textarea name="description" rows="2"
                                                           placeholder="Internal notes for volunteers"
-                                                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?php echo e($zone['description'] ?? ''); ?></textarea>
+                                                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"><?php echo e($zone['description'] ?? ''); ?></textarea>
                                                 <p class="text-xs text-gray-500 mt-1">NOT shown to referrers</p>
                                             </div>
                                             <div>
                                                 <label class="flex items-center">
                                                     <input type="checkbox" name="is_active" <?php echo $zone['is_active'] ? 'checked' : ''; ?>
-                                                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                                           class="rounded border-gray-300 text-[#eb008b] focus:ring-[#eb008b]">
                                                     <span class="ml-2 text-sm text-gray-700">Active</span>
                                                 </label>
                                             </div>
                                             <div class="flex space-x-2">
                                                 <button type="submit"
-                                                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                                        class="px-4 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition text-sm">
                                                     Save Changes
                                                 </button>
                                                 <button type="button" onclick="toggleEditZone(<?php echo $zone['id']; ?>)"

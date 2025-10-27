@@ -37,31 +37,31 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     </div>
                     <div class="hidden md:ml-6 md:flex md:space-x-8">
                         <a href="index.php"
-                           class="<?php echo $currentPage == 'index' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'index' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Dashboard
                         </a>
                         <a href="referrals.php"
-                           class="<?php echo $currentPage == 'referrals' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'referrals' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Referrals
                         </a>
                         <a href="collect.php"
-                           class="<?php echo $currentPage == 'collect' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'collect' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Quick Collect
                         </a>
                         <a href="labels.php"
-                           class="<?php echo $currentPage == 'labels' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'labels' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Labels
                         </a>
                         <a href="reports.php"
-                           class="<?php echo $currentPage == 'reports' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'reports' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Reports
                         </a>
                         <a href="deletions.php"
-                           class="<?php echo $currentPage == 'deletions' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'deletions' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Deletions
                         </a>
                         <a href="settings.php"
-                           class="<?php echo $currentPage == 'settings' ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                           class="<?php echo $currentPage == 'settings' ? 'border-[#eb008b] text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Settings
                         </a>
                     </div>
@@ -71,7 +71,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                         Welcome, <strong><?php echo e($currentUser['full_name']); ?></strong>
                     </span>
                     <a href="../index.php" target="_blank"
-                       class="hidden lg:inline text-sm text-blue-600 hover:text-blue-500 mr-4">
+                       class="hidden lg:inline text-sm text-[#eb008b] hover:text-[#c00074] mr-4">
                         View Form
                     </a>
                     <a href="logout.php"
@@ -82,7 +82,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 <!-- Mobile menu button -->
                 <div class="flex items-center md:hidden">
                     <button id="mobile-menu-button" type="button"
-                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#eb008b]">
                         <span class="sr-only">Open main menu</span>
                         <!-- Menu icon -->
                         <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -97,31 +97,31 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
         <div id="mobile-menu" class="hidden md:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <a href="index.php"
-                   class="<?php echo $currentPage == 'index' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'index' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Dashboard
                 </a>
                 <a href="referrals.php"
-                   class="<?php echo $currentPage == 'referrals' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'referrals' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Referrals
                 </a>
                 <a href="collect.php"
-                   class="<?php echo $currentPage == 'collect' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'collect' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Quick Collection
                 </a>
                 <a href="labels.php"
-                   class="<?php echo $currentPage == 'labels' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'labels' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Print Labels
                 </a>
                 <a href="reports.php"
-                   class="<?php echo $currentPage == 'reports' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'reports' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Reports & Analytics
                 </a>
                 <a href="deletions.php"
-                   class="<?php echo $currentPage == 'deletions' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'deletions' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Deletion History
                 </a>
                 <a href="settings.php"
-                   class="<?php echo $currentPage == 'settings' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                   class="<?php echo $currentPage == 'settings' ? 'bg-pink-50 border-[#eb008b] text-[#c00074]' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'; ?> block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                     Settings
                 </a>
             </div>
@@ -132,7 +132,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 </div>
                 <div class="mt-3 space-y-1">
                     <a href="../index.php" target="_blank"
-                       class="block px-4 py-2 text-base font-medium text-blue-600 hover:text-blue-800 hover:bg-gray-100">
+                       class="block px-4 py-2 text-base font-medium text-[#eb008b] hover:text-[#c00074] hover:bg-gray-100">
                         View Referral Form
                     </a>
                     <a href="logout.php"

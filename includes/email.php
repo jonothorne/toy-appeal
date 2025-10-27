@@ -354,9 +354,9 @@ function sendReferralConfirmation($referrerEmail, $referrerName, $childrenCount,
         <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #2563eb; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #eb008b; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-            .button { display: inline-block; background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0; }
+            .button { display: inline-block; background: #eb008b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0; }
             .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
         </style>
     </head>
@@ -386,7 +386,7 @@ function sendReferralConfirmation($referrerEmail, $referrerName, $childrenCount,
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb;'>
                     <strong>Your Data Rights:</strong> Under UK GDPR, you have the right to access, correct, or request deletion of your personal data.
                     To exercise these rights or for any privacy questions, contact us at office@alive.me.uk.
-                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #2563eb;'>Privacy Policy</a>.
+                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #eb008b;'>Privacy Policy</a>.
                 </p>
             </div>
         </div>
@@ -505,7 +505,7 @@ function sendCollectionReadyEmail($referralId) {
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb;'>
                     <strong>Your Data Rights:</strong> Under UK GDPR, you have the right to access, correct, or request deletion of your personal data.
                     To exercise these rights or for any privacy questions, contact us at office@alive.me.uk.
-                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #2563eb;'>Privacy Policy</a>.
+                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #eb008b;'>Privacy Policy</a>.
                 </p>
             </div>
         </div>
@@ -528,7 +528,7 @@ function getEmailTemplate($title, $content) {
         <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #2563eb; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #eb008b; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
             .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
         </style>
@@ -681,7 +681,7 @@ function sendCollectionReminderEmail($referralId) {
                 <p style='font-size: 11px; color: #9ca3af; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb;'>
                     <strong>Your Data Rights:</strong> Under UK GDPR, you have the right to access, correct, or request deletion of your personal data.
                     To exercise these rights or for any privacy questions, contact us at office@alive.me.uk.
-                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #2563eb;'>Privacy Policy</a>.
+                    View our <a href='" . SITE_URL . "/privacy.php' style='color: #eb008b;'>Privacy Policy</a>.
                 </p>
             </div>
         </div>

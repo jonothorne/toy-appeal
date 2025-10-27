@@ -174,7 +174,7 @@ require_once __DIR__ . '/includes/admin_header.php';
 <div class="space-y-6">
     <!-- Back Button -->
     <div>
-        <a href="view_referral.php?id=<?php echo $referralId; ?>" class="text-blue-600 hover:text-blue-800 flex items-center">
+        <a href="view_referral.php?id=<?php echo $referralId; ?>" class="text-[#eb008b] hover:text-[#c00074] flex items-center">
             <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
@@ -202,37 +202,37 @@ require_once __DIR__ . '/includes/admin_header.php';
                         <label class="block text-sm font-medium text-gray-700 mb-2">Referrer Name <span class="text-red-500">*</span></label>
                         <input type="text" name="referrer_name" required
                                value="<?php echo e($referral['referrer_name']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Organisation <span class="text-red-500">*</span></label>
                         <input type="text" name="referrer_organisation" required
                                value="<?php echo e($referral['referrer_organisation']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Team Name</label>
                         <input type="text" name="referrer_team"
                                value="<?php echo e($referral['referrer_team'] ?? ''); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Contact</label>
                         <input type="text" name="secondary_contact"
                                value="<?php echo e($referral['secondary_contact'] ?? ''); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number <span class="text-red-500">*</span></label>
                         <input type="tel" name="referrer_phone" required
                                value="<?php echo e($referral['referrer_phone']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Email Address <span class="text-red-500">*</span></label>
                         <input type="email" name="referrer_email" required
                                value="<?php echo e($referral['referrer_email']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                 </div>
             </div>
@@ -245,12 +245,12 @@ require_once __DIR__ . '/includes/admin_header.php';
                         <label class="block text-sm font-medium text-gray-700 mb-2">Family Postcode <span class="text-red-500">*</span></label>
                         <input type="text" name="postcode" required
                                value="<?php echo e($referral['postcode']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">How long has the family been known? <span class="text-red-500">*</span></label>
                         <select name="duration_known" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                             <option value="<1 month" <?php echo $referral['duration_known'] === '<1 month' ? 'selected' : ''; ?>>&lt;1 month</option>
                             <option value="1-6 months" <?php echo $referral['duration_known'] === '1-6 months' ? 'selected' : ''; ?>>1-6 months</option>
                             <option value="6-12 months" <?php echo $referral['duration_known'] === '6-12 months' ? 'selected' : ''; ?>>6-12 months</option>
@@ -262,7 +262,7 @@ require_once __DIR__ . '/includes/admin_header.php';
                 <div class="mt-6">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
                     <textarea name="additional_notes" rows="3"
-                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"><?php echo e($referral['additional_notes'] ?? ''); ?></textarea>
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"><?php echo e($referral['additional_notes'] ?? ''); ?></textarea>
                 </div>
             </div>
 
@@ -274,18 +274,18 @@ require_once __DIR__ . '/includes/admin_header.php';
                         <label class="block text-sm font-medium text-gray-700 mb-2">Child Initials <span class="text-red-500">*</span></label>
                         <input type="text" name="child_initials" required maxlength="10"
                                value="<?php echo e($referral['child_initials']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Age <span class="text-red-500">*</span></label>
                         <input type="number" name="child_age" required min="0" max="18"
                                value="<?php echo e($referral['child_age']); ?>"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Gender <span class="text-red-500">*</span></label>
                         <select name="child_gender" required
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent">
                             <option value="Male" <?php echo $referral['child_gender'] === 'Male' ? 'selected' : ''; ?>>Male</option>
                             <option value="Female" <?php echo $referral['child_gender'] === 'Female' ? 'selected' : ''; ?>>Female</option>
                             <option value="Other" <?php echo $referral['child_gender'] === 'Other' ? 'selected' : ''; ?>>Other</option>
@@ -295,7 +295,7 @@ require_once __DIR__ . '/includes/admin_header.php';
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Special Requirements</label>
                         <textarea name="special_requirements" rows="3"
-                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#eb008b] focus:border-transparent"
                                   placeholder="e.g., learning difficulties, sensory needs, disabilities"><?php echo e($referral['special_requirements'] ?? ''); ?></textarea>
                     </div>
                 </div>
@@ -315,7 +315,7 @@ require_once __DIR__ . '/includes/admin_header.php';
                     Cancel
                 </a>
                 <button type="submit"
-                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        class="px-6 py-3 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition font-medium">
                     Save Changes
                 </button>
             </div>

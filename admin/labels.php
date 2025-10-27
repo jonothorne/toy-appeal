@@ -219,11 +219,11 @@ $printMode = isset($_GET['print']) && !empty($referrals);
         <div class="bg-white rounded-lg shadow p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">Search Referrals to Print</h3>
             <p class="text-sm text-gray-600 mb-4">
-                Use the <a href="referrals.php" class="text-blue-600 hover:underline">Referrals page</a> to search and filter,
+                Use the <a href="referrals.php" class="text-[#eb008b] hover:underline">Referrals page</a> to search and filter,
                 then click "Print Label" on individual referrals or "Print All Household Labels" to print multiple.
             </p>
             <a href="referrals.php"
-               class="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+               class="inline-block px-6 py-2 bg-[#eb008b] text-white rounded-lg hover:bg-[#c00074] transition">
                 Go to Referrals
             </a>
         </div>
