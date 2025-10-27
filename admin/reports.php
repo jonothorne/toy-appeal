@@ -1,12 +1,19 @@
 <?php
-$pageTitle = "Reports & Analytics";
-require_once __DIR__ . '/includes/admin_header.php';
+// Load required files BEFORE any output
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+// Require login
+requireLogin();
+$currentUser = getCurrentUser();
 
 // Get date range from request or use defaults
 $startDate = $_GET['start_date'] ?? date('Y-01-01'); // Start of current year
 $endDate = $_GET['end_date'] ?? date('Y-m-d'); // Today
 
-// Handle CSV export
+// Handle CSV export BEFORE any HTML output
 if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
     $exportData = getRows(
         "SELECT
@@ -84,6 +91,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
     fclose($output);
     exit;
 }
+
+// NOW load the header (after CSV export is handled)
+$pageTitle = "Reports & Analytics";
+require_once __DIR__ . '/includes/admin_header.php';
 
 // Get statistics with date filtering
 $stats = getStatistics();
