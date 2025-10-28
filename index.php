@@ -296,7 +296,7 @@ require_once __DIR__ . '/includes/header.php';
                                 <div class="ml-3">
                                     <label for="gdpr_consent" class="text-sm text-gray-700">
                                         <span class="font-medium">I consent to Alive Church collecting and processing the information provided in this referral form.</span>
-                                        I understand that this data will be used solely for the purpose of processing this Christmas Toy Appeal referral and contacting me about collection arrangements.
+                                        I understand that this data will be used solely for the purpose of processing this Christmas Toy Appeal referral and contacting me about collection arrangements. Your email address may be stored so we can contact you in the future about other provision we can offer. 
                                         I understand that I have the right to request access to, correction of, or deletion of this data at any time by contacting
                                         <a href="mailto:office@alive.me.uk" class="text-[#eb008b] hover:text-[#c00074] underline">office@alive.me.uk</a>.
                                         <span class="text-red-500">*</span>
